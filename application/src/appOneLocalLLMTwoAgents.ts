@@ -19,9 +19,10 @@ import { generateSummary } from './llmSummarizeTranscriptLocal.js';
 import { createConsoleReader } from "./io.js";
 import { runAgentUpdateRouterIfNecessary } from './agentUpdateRouterIfNecessary.js';
 import { runAgentWriteMailIfNecessary } from './agentWriteMailIfNecessary.js';
+import { Message, messageStore } from './globalMessageStore.js';
 
 const transcriptFile = './prompts/prompt4.md'
-const reader = createConsoleReader();
+const reader = createConsoleReader(messageStore);
 
 //////////////////////////////////////////////////////////////////
 // Step 1: LLM summarization
@@ -36,7 +37,7 @@ reader.write(`Response LLM 🤖 (text) : `, transcriptSummary);
 // Step 2: Agent One with RouterUpdateTool
 //////////////////////////////////////////////////////////////////
 
-const agentOneResponse = await runAgentUpdateRouterIfNecessary(transcriptSummary)
+const agentOneResponse = await runAgentUpdateRouterIfNecessary(transcriptSummary, messageStore)
 let agentOneResponseText
 if (agentOneResponse) {
     agentOneResponseText = agentOneResponse.result.text
@@ -48,11 +49,12 @@ if (agentOneResponse) {
 
     console.log("=================================================================");
     console.log("=================================================================");
-    const agentTwoResponse = await runAgentWriteMailIfNecessary(agentOneResponseText, transcriptSummary)
+    const agentTwoResponse = await runAgentWriteMailIfNecessary(agentOneResponseText, transcriptSummary, messageStore)
     if (agentTwoResponse) {
         let agentTwoResponseText = agentTwoResponse.result.text
         reader.write(`Response WriteMailIfNecessary 🤖 : `, agentTwoResponseText);
     }
 }
 
+console.log("Message Store:", JSON.stringify(messageStore, null, 2));
 process.exit(0);

@@ -20,8 +20,14 @@ import { createConsoleReader } from "./io.js";
 import { WatsonXLLM } from "bee-agent-framework/adapters/watsonx/llm";
 import { WatsonXChatLLMPresetModel } from 'bee-agent-framework/adapters/watsonx/chatPreset';
 
-export async function generateSummary(transcript:string) {
-    const reader = createConsoleReader();
+interface Message {
+    author: string;
+    text: string;
+    subMessages?: { author: string; text: string }[];
+}
+
+export async function generateSummary(transcript:string, messageStore: Message[]) {
+    const reader = createConsoleReader(messageStore);
 
     const WATSONX_MODEL = process.env.WATSONX_MODEL as WatsonXChatLLMPresetModel
     const llm = new WatsonXLLM({

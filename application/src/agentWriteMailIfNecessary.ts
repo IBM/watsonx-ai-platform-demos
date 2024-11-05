@@ -24,9 +24,10 @@ import { FrameworkError, Logger, PromptTemplate } from "bee-agent-framework";
 import { GenerateCallbacks } from "bee-agent-framework/llms/base";
 import { WriteMailTool } from "./toolWriteMail.js";
 import { BeeAgentTemplates } from "bee-agent-framework/agents/bee/types";
+import { Message, messageStore } from "./globalMessageStore.js";
 
 const instructionFile = './prompts/instructionAgentTwo.md'
-const reader = createConsoleReader();
+const reader = createConsoleReader(messageStore);
 const logger = new Logger({ name: "app", level: "trace" });
 
 let instruction:string = readFileSync(instructionFile, 'utf-8').split("\\n").join("\n")
@@ -56,7 +57,7 @@ const agent = new BeeAgent({
     ]
 });
 
-export async function runAgentWriteMailIfNecessary(routerUpdated:string, transcriptSummary:string) {
+export async function runAgentWriteMailIfNecessary(routerUpdated:string, transcriptSummary:string, messageStore: Message[]) {
     let prompt = routerUpdated + transcriptSummary
     try {
         console.log("Agent WriteMailIfNecessary Prompt Addition:")
@@ -91,15 +92,22 @@ export async function runAgentWriteMailIfNecessary(routerUpdated:string, transcr
                         const eventName = event.name as keyof GenerateCallbacks;
                         switch (eventName) {
                             case "start":
-                                console.info("Agent WriteMailIfNecessary LLM Input");
-                                console.info(data.input);
+                                reader.write(
+                                    "Agent WriteMailIfNecessary LLM Input",
+                                    JSON.stringify(data.input, null, 2),
+                                  );
                                 break;
                             case "success":
-                                console.info("Agent WriteMailIfNecessary LLM Output");
-                                console.info(data.value.raw.finalResult);
+                                reader.write(
+                                    "Agent WriteMailIfNecessary LLM Output",
+                                    data.value.raw.finalResult,
+                                  );
                                 break;
                             case "error":
-                                console.error(data);
+                                reader.write(
+                                    "Agent WriteMailIfNecessary Error",
+                                    FrameworkError.ensure(data).dump(),
+                                  );
                                 break;
                         }
                     }

@@ -21,6 +21,7 @@ import { stdin, stdout } from "node:process";
 import picocolors from "picocolors";
 import * as R from "remeda";
 import stripAnsi from "strip-ansi";
+import { Message, messageStore } from "./globalMessageStore.js";
 
 interface ReadFromConsoleInput {
   fallback?: string;
@@ -28,16 +29,28 @@ interface ReadFromConsoleInput {
   allowEmpty?: boolean;
 }
 
-export function createConsoleReader({
+export function createConsoleReader(
+  messageStore: Message[],
+  {
   fallback,
   input = "User 👤 : ",
   allowEmpty = false,
 }: ReadFromConsoleInput = {}) {
   const rl = readline.createInterface({ input: stdin, output: stdout, terminal: true });
   let isActive = true;
+  let messageLock = Promise.resolve();
+
+  function appendMessage(role: string, data: string) {
+    messageLock = messageLock.then(async () => {  
+      const message: Message = { author: role, text: data };
+      messageStore.push(message);
+      });
+  }
 
   return {
     write(role: string, data: string) {
+      appendMessage(role, data);
+
       rl.write(
         [role && R.piped(picocolors.red, picocolors.bold)(role), stripAnsi(data ?? "")]
           .filter(Boolean)

@@ -29,11 +29,12 @@ import { WriteMailTool } from './toolWriteMail.js';
 import { generateSummary } from './llmSummarizeTranscript.js';
 import { PromptTemplate } from 'bee-agent-framework';
 import { BeeAgentTemplates } from 'bee-agent-framework/agents/bee/types';
+import { Message, messageStore } from './globalMessageStore.js';
 
 const instructionFileLLM = './prompts/instructionLLM.md'
 const instructionFileAgent = './prompts/instructionOneAgent.md'
 const transcriptFile = './prompts/prompt4.md'
-const reader = createConsoleReader();
+const reader = createConsoleReader(messageStore);
 const logger = new Logger({ name: "app", level: "trace" });
 const instructionLLM = readFileSync(instructionFileLLM, 'utf-8').split("\\n").join("\n")
 let promptInput:string = readFileSync(transcriptFile, 'utf-8').split("\\n").join("\n")
@@ -47,7 +48,7 @@ console.log(prompt)
 //////////////////////////////////////////////////////////////////
 
 let transcript:string = readFileSync(transcriptFile, 'utf-8').split("\\n").join("\n")
-const llmResponse = await generateSummary(transcript)
+const llmResponse = await generateSummary(transcript, messageStore)
 let llmStep1Response = llmResponse.getTextContent()
 reader.write(`LLM 🤖 (text) : `, llmStep1Response);
 
@@ -110,15 +111,13 @@ try {
           const eventName = event.name as keyof GenerateCallbacks;
           switch (eventName) {
             case "start":
-              console.info("LLM Input");
-              console.info(data.input);
+              reader.write("LLM Input", JSON.stringify(data.input, null, 2));
               break;
             case "success":
-              console.info("LLM Output");
-              console.info(data.value.raw.finalResult);
+              reader.write("LLM Output", data.value.raw.finalResult);
               break;
             case "error":
-              console.error(data);
+              reader.write("LLM Error", FrameworkError.ensure(data).dump());
               break;
           }
         }
@@ -128,5 +127,6 @@ try {
 } catch (error) {
   logger.error(FrameworkError.ensure(error).dump());
 } finally {
+  console.log("Message Store:", JSON.stringify(messageStore, null, 2));
   process.exit(0);
 }

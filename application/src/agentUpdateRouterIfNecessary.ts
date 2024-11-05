@@ -24,9 +24,10 @@ import { FrameworkError, Logger, PromptTemplate } from "bee-agent-framework";
 import { GenerateCallbacks } from "bee-agent-framework/llms/base";
 import { BeeAgentTemplates } from "bee-agent-framework/agents/bee/types";
 import { readFileSync } from 'fs';
+import { Message, messageStore } from "./globalMessageStore.js";
 
 const instructionFile = './prompts/instructionAgentOne.md'
-const reader = createConsoleReader();
+const reader = createConsoleReader(messageStore);
 const logger = new Logger({ name: "app", level: "trace" });
 
 let instruction:string = readFileSync(instructionFile, 'utf-8').split("\\n").join("\n")
@@ -55,7 +56,7 @@ const agent = new BeeAgent({
     ]
 });
 
-export async function runAgentUpdateRouterIfNecessary(transcriptSummary:string) {   
+export async function runAgentUpdateRouterIfNecessary(transcriptSummary:string, messageStore: Message[]) {   
     try {
         //console.log("Agent UpdateRouterIfNecessary Prompt Addition:")
         //console.log(transcriptSummary)
@@ -89,14 +90,22 @@ export async function runAgentUpdateRouterIfNecessary(transcriptSummary:string) 
                         const eventName = event.name as keyof GenerateCallbacks;
                         switch (eventName) {
                             case "start":
-                                console.info("Agent UpdateRouterIfNecessary LLM Input");
-                                console.info(data.input);
+                                reader.write(
+                                    "Agent UpdateRouterIfNecessary LLM Input",
+                                    JSON.stringify(data.input, null, 2),
+                                );
                                 break;
                             case "success":
-                                console.info("Agent UpdateRouterIfNecessary LLM Output");
-                                console.info(data.value.raw.finalResult);
+                                reader.write(
+                                    "Agent UpdateRouterIfNecessary LLM Output",
+                                    JSON.stringify(data.value.raw.finalResult, null, 2),
+                                );
                                 break;
                             case "error":
+                                reader.write(
+                                    "Agent UpdateRouterIfNecessary Error",
+                                    FrameworkError.ensure(data).dump(),
+                                );
                                 console.error(data);
                                 break;
                         }

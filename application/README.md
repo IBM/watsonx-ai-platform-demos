@@ -45,6 +45,8 @@ yarn start
 // to udpate swagger: tsoa spec
 
 // optional: yarn infra:start-code-interpreter
+
+// save console output to file: yarn start:appOneLLMTwoAgents | tee -a test.log
 ```
 
 ## REST Endpoints
