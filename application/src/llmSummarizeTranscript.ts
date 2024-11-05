@@ -19,12 +19,7 @@ import "dotenv/config.js";
 import { createConsoleReader } from "./io.js";
 import { WatsonXLLM } from "bee-agent-framework/adapters/watsonx/llm";
 import { WatsonXChatLLMPresetModel } from 'bee-agent-framework/adapters/watsonx/chatPreset';
-
-interface Message {
-    author: string;
-    text: string;
-    subMessages?: { author: string; text: string }[];
-}
+import { Message, messageStore } from "./globalMessageStore.js";
 
 export async function generateSummary(transcript:string, messageStore: Message[]) {
     const reader = createConsoleReader(messageStore);

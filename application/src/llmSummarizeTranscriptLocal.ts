@@ -18,9 +18,10 @@ import { readFileSync } from 'fs';
 import "dotenv/config.js";
 import { createConsoleReader } from "./io.js";
 import { OllamaLLM } from 'bee-agent-framework/adapters/ollama/llm';
+import { messageStore } from './globalMessageStore.js';
 
 export async function generateSummary(transcript:string) {
-    const reader = createConsoleReader();
+    const reader = createConsoleReader(messageStore);
 
     const llm = new OllamaLLM({
         modelId: "transcript-summary",
