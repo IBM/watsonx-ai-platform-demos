@@ -9,6 +9,7 @@ The example AI application in this repo leverages the following main components:
 * [IBM watsonx Orchestrate](https://www.ibm.com/products/watsonx-orchestrate)
 * [InstructLab](https://github.com/instructlab/instructlab)
 * [Bee Agent Framework](https://github.com/i-am-bee/bee-agent-framework)
+* [IBM watsonx.ai Flows Engine](https://github.com/IBM/wxflows)
 
 <kbd><img src="documentation/watsonx-platform-demos.png" /></kbd>
 
@@ -21,6 +22,7 @@ The example AI application in this repo leverages the following main components:
 * Developers can start working efficiently locally with InstructLab and Bee Agent Framework
 * Metrics can be monitored with watsonx.governance
 * watsonx Orchestrate provides integrations of custom AI applications in conversational experiences
+* watsonx.ai Flows Engine allows you to build tools you can use in different agentic frameworks
 
 ## Example Scenario
 
@@ -206,6 +208,10 @@ To evaluate foundation models, watsonx.governance provides mechanisms to monitor
 * watsonx.governance
     * [Documentation](https://www.ibm.com/docs/en/watsonx/saas?topic=governing-ai-assets)
     * [GenAI Quality Metrics for third Party Models in watsonx](https://heidloff.net/article/generative-ai-quality-metrics-watsonx-governance-third-party-models/)
+* watsonx.ai Flows Engine
+    * [GitHub Repo](https://github.com/IBM/wxflows)
+    * [Documentation](https://wxflows.ibm.stepzen.com/docs)
+    * [YouTube tutorials](https://www.youtube.com/playlist?list=PLzpeuWUENMK3jYU3Du7qEeeq3CeWm4jJV)
 
 ## Get started
 
