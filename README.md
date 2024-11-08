@@ -210,15 +210,15 @@ To evaluate foundation models, watsonx.governance provides mechanisms to monitor
 ## Get started
 
 ```bash
-git clone https://github.com/nheidloff/watsonx-ai-platform-demos
-cd watsonx-demos/application
+git clone https://github.com/IBM/watsonx-ai-platform-demos
+cd watsonx-demos/applications/application
 cp .env.template .env
 # define WATSONX_API_KEY and WATSONX_PROJECT_ID
 yarn install
 yarn start:appOneLLMTwoAgents
 ```
 
-See the [application documentation](application/README.md) for more.
+See the [application documentation](applications/application/README.md) for more.
 
 ## Authors
 
