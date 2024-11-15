@@ -1,11 +1,19 @@
-import streamlit as st
+import os
 import requests
-
-#TODOS: 
-# 1. get credentials 
-# 2. field for question --> send request
+import streamlit as st
+from dotenv import load_dotenv
+from utils.utils import init_db, get_credentials, save_credentials, display_configuration
 
 def get_bearer_token(api_key):
+    """
+    Retrieve a Bearer token from IBM Cloud IAM.
+
+    Args:
+        api_key (str): IBM Cloud API key.
+
+    Returns:
+        str: Bearer token if successful, None otherwise.
+    """
     url = "https://iam.cloud.ibm.com/identity/token"
     headers = {
         "Content-Type": "application/x-www-form-urlencoded",
@@ -22,38 +30,86 @@ def get_bearer_token(api_key):
         print(f"Failed to retrieve token: {response.text}")
         return None
 
+def display_results(results):
+    """
+    Display predictions and proximity search results in the Streamlit app.
+
+    Args:
+        results (dict): The response from the Watsonx deployment containing predictions.
+    """
+    predictions = results['predictions'][0]
+
+    # Extract proximity search results and generated response
+    proximity_results = predictions['values'][0]
+    generated_response = predictions['values'][1]
+
+    # Display the generated response
+    st.write(f"**Generated Response:**\n\n{generated_response}")
+
+    # Display proximity search results
+    st.markdown("**Proximity Search Results:**")
+    for result in proximity_results:
+        metadata = result['metadata']
+        score = result['score']
+        st.write(f"Asset: {metadata['asset_name']} (Score: {score:.2f})")
+        st.write(f"Range: {metadata['from']} - {metadata['to']}")
+        # Uncomment the following line to display document links if available
+        # st.write(f"[View Document]({metadata['url']})")
+        st.write("---")  # Separator for readability
+
 def display_page2():
-    st.title("Page 2")
-    default_question= "I'm trying to execute a routine named GET_CUSTOMER_DATA in DB2, but it returns an error: 'Routine not found in schema.' I double-checked the routine name, and it exists in the catalog."
-    user_question = st.text_input("Enter your question", value=default_question)
-    
-    ### change this! ###
-    api_key = "0-yL63WB4sv1_lB-rx3vdvXfnYh5MrDT7vXTOqqxkBX4"  # SENSITIVE!! DO NOT SHARE OR UPLOAD TO GITHUB
+    """
+    Main function to display the second page of the Streamlit app,
+    allowing users to input their API key, deployment URL, and generate a response.
+    """
+    st.title("IBM Watson Assistant - Email Generator")
 
-    
-    # header = {"Content-Type": "application/json", "Authorization": "Bearer " 
-    #           + get_bearer_token(api_key)}
+    # Initialize database and load environment variables
+    init_db()
+    load_dotenv()
 
-    messages = []
-    messages.append({ "role" : "user", "content": user_question })
+    # Retrieve stored credentials or default values
+    api_key = os.getenv("API_KEY")
+    deployment_url = os.getenv("DEPLOYMENT_URL")
+    credentials = get_credentials()
+    if credentials:
+        api_key, deployment_url = credentials
+
+    # Get API key and deployment URL from configuration section
+    api_key, deployment_url_rag, deployment_url_write_email = display_configuration()
+    deployment_url = deployment_url_rag
+
+    # Default user question
+    default_question = (
+        "I'm trying to execute a routine named GET_CUSTOMER_DATA in DB2, but it "
+        "returns an error: 'Routine not found in schema.' I double-checked the routine "
+        "name, and it exists in the catalog."
+    )
+    user_question = st.text_area("Enter your question", value=default_question, height=150)
+
+    # Prepare payload for scoring request
+    messages = [{"role": "user", "content": user_question}]
     payload_scoring = {
         "input_data": [
             {
                 "fields": ["Search", "access_token"],
-                "values": [messages, [get_bearer_token(api_key)] #this is kind of redundant, but it's the way the retriever gets the token to send a request to watsonx.ai
-                ],
+                "values": [messages, [get_bearer_token(api_key)]],
             }
         ]
     }
 
-    if st.button("Generate Email"):
-        response_scoring = requests.post(
-            "https://us-south.ml.cloud.ibm.com/ml/v4/deployments/9aa835da-e675-437b-be80-2b905f99fe50/predictions?version=2021-05-01",
-            json=payload_scoring,
-            headers={"Authorization": "Bearer " + get_bearer_token(api_key)}, 
-        )
-        print(response_scoring.json())
-        st.text_area("Generated Response", response_scoring.json(), height=800)
-        
+    # Button to generate an email
+    if st.button("Query knowledge base"):
+        with st.spinner("Sending request to IBM GenAI model..."):
+            response = requests.post(
+                deployment_url,
+                json=payload_scoring,
+                headers={"Authorization": f"Bearer {get_bearer_token(api_key)}"},
+            )
+        if response.status_code == 200:
+            display_results(response.json())
+        else:
+            st.error(f"Failed to generate response: {response.text}")
+
 if __name__ == "__main__":
     display_page2()

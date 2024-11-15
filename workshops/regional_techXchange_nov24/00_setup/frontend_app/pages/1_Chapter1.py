@@ -1,46 +1,24 @@
-import streamlit as st
-import sqlite3
-import requests
-from dotenv import load_dotenv
 import os
+import requests
+import streamlit as st
+from dotenv import load_dotenv
+from utils.utils import init_db, get_credentials, save_credentials, get_ibm_token, display_configuration
 
-# Initialize database connection for storing API key and deployment URL
-def init_db():
-    conn = sqlite3.connect("api_data.db")
-    conn.execute('''
-        CREATE TABLE IF NOT EXISTS credentials (
-            id INTEGER PRIMARY KEY AUTOINCREMENT,
-            api_key TEXT,
-            deployment_url TEXT
-        )
-    ''')
-    conn.commit()
-    conn.close()
 
-# Retrieve the latest stored credentials from the database
-def get_credentials():
-    conn = sqlite3.connect("api_data.db")
-    credentials = conn.execute("SELECT api_key, deployment_url FROM credentials ORDER BY id DESC LIMIT 1").fetchone()
-    conn.close()
-    return credentials if credentials else None
+def send_scoring_request(iam_token, deployment_url, client_problem, suggested_resolution, your_name):
+    """
+    Send a scoring request to the IBM GenAI Model to generate an email.
 
-# Save new credentials to the database
-def save_credentials(api_key, deployment_url):
-    conn = sqlite3.connect("api_data.db")
-    conn.execute("INSERT INTO credentials (api_key, deployment_url) VALUES (?, ?)", (api_key, deployment_url))
-    conn.commit()
-    conn.close()
+    Args:
+        iam_token (str): IBM IAM token for authentication.
+        deployment_url (str): Deployment URL of the GenAI model.
+        client_problem (str): Description of the client's issue.
+        suggested_resolution (str): Proposed resolution to the issue.
+        your_name (str): Name of the user generating the email.
 
-# Retrieve IBM Cloud token
-def get_ibm_token(api_key):
-    response = requests.post(
-        'https://iam.cloud.ibm.com/identity/token',
-        data={"apikey": api_key, "grant_type": 'urn:ibm:params:oauth:grant-type:apikey'}
-    )
-    return response.json().get("access_token") if response.status_code == 200 else None
-
-# Send a scoring request to the IBM GenAI Model
-def send_scoring_request(iam_token, deployment_url, client_problem, suggested_resolution):
+    Returns:
+        str: The generated email text or an error message.
+    """
     response = requests.post(
         deployment_url,
         headers={"Authorization": f"Bearer {iam_token}", "Content-Type": "application/json"},
@@ -48,55 +26,53 @@ def send_scoring_request(iam_token, deployment_url, client_problem, suggested_re
             "parameters": {
                 "prompt_variables": {
                     "Initial_Client_Problem": client_problem,
-                    "My_suggested_Resolution": suggested_resolution
+                    "My_suggested_Resolution": suggested_resolution,
+                    "My_name": your_name
                 }
             }
         }
     )
-    return response.json().get("results", [{}])[0].get("generated_text", "Error: Response parsing failed.")
+    if response.status_code == 200:
+        return response.json().get("results", [{}])[0].get("generated_text", "Error: Response parsing failed.")
+    else:
+        return f"Error: Failed to retrieve response. Status code: {response.status_code}"
 
-# Main function for Page 1 content
+
 def display_page1():
-    st.title("Write a nice Email IBM GenAI Model")
+    """
+    Main function to render the Streamlit app for generating client-facing emails using IBM GenAI.
+    """
+    st.title("Generate a Professional Email with IBM GenAI")
 
-    # Initialize database and load stored credentials
+    # Initialize database and load environment variables
     init_db()
     load_dotenv()
-    
-    api_key = os.getenv("API_KEY")  
-    print("default_api_key")
-    print(api_key)
-    deployment_url = os.getenv("DEPLOYMENT_URL")
 
-    credentials = get_credentials() # Retrieve stored credentials from db if they exist
-    if credentials: # if the credentials tuple is not empty use those credentials
-        api_key, deployment_url = credentials
+    # Get API key and deployment URL from configuration section
+    api_key, deployment_url_rag, deployment_url_write_email = display_configuration()
+    deployment_url = deployment_url_write_email
 
-    # Input fields for API key and deployment URL
-    api_key = st.text_input("Enter your API key", value=api_key, type="password")
-    deployment_url = st.text_input("Enter deployment URL", value=deployment_url)
+    default_name = "Maximilian Jesch"
+    default_problem = ("We created a new index on the products table to improve searches,"
+                       "but now the CHECK_STOCK routine is significantly slower.")
+    default_resolution = ("Review the new index's impact on the routine's queries and "
+                          "consider adjusting query structure or index strategy.")
 
+    # Input fields for the email generation process
+    your_name = st.text_input("Enter Your Name", value=default_name)
+    client_problem = st.text_area("Enter Initial Client Problem", value=default_problem, height=150)
+    suggested_resolution = st.text_area("Enter Suggested Resolution", value=default_resolution, height=150)
 
-    if st.button("Save API Key and URL") and api_key and deployment_url:
-        save_credentials(api_key, deployment_url)
-        st.success("Credentials saved!")
-
-    # User input for the problem and suggested resolution
-    client_problem = st.text_input("Enter Initial Client Problem", "Describe the client's issue here.")
-    suggested_resolution = st.text_input("Enter Suggested Resolution", "Provide a potential solution.")
-
+    # Generate email when the button is clicked
     if st.button("Generate Email"):
         token = get_ibm_token(api_key)
         if token:
-            st.write("Sending request to IBM GenAI model...")
-            response_text = send_scoring_request(token, deployment_url, client_problem, suggested_resolution)
-            # st.write(f"**Generated Response:**\n\n{response_text}")
-            
-            # Add CSS for wrapping text in st.code
-            st.text_area("Generated Response", response_text, height=800)
-
+            with st.spinner("Sending request to IBM GenAI model..."):
+                response_text = send_scoring_request(token, deployment_url, client_problem, suggested_resolution, your_name)
+            st.text_area("Generated Response", response_text, height=400)
         else:
             st.error("Failed to retrieve IBM token. Check your API key.")
+
 
 if __name__ == "__main__":
     display_page1()
