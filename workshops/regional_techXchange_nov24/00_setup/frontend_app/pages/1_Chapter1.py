@@ -32,8 +32,6 @@ def send_scoring_request(iam_token, deployment_url, client_problem, suggested_re
             }
         }
     )
-    print(deployment_url)
-    print(iam_token)
     if response.status_code == 200:
         return response.json().get("results", [{}])[0].get("generated_text", "Error: Response parsing failed.")
     else:
