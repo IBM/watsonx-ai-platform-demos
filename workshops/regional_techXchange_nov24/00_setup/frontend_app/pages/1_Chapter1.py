@@ -32,9 +32,12 @@ def send_scoring_request(iam_token, deployment_url, client_problem, suggested_re
             }
         }
     )
+    print(deployment_url)
+    print(iam_token)
     if response.status_code == 200:
         return response.json().get("results", [{}])[0].get("generated_text", "Error: Response parsing failed.")
     else:
+        print(response.json())
         return f"Error: Failed to retrieve response. Status code: {response.status_code}"
 
 
@@ -49,9 +52,9 @@ def display_page1():
     load_dotenv()
 
     # Get API key and deployment URL from configuration section
-    api_key, deployment_url_rag, deployment_url_write_email = display_configuration()
+    api_key, deployment_url_rag, deployment_url_write_email = display_configuration("write_email")
     deployment_url = deployment_url_write_email
-
+    
     default_name = "Maximilian Jesch"
     default_problem = ("We created a new index on the products table to improve searches,"
                        "but now the CHECK_STOCK routine is significantly slower.")
