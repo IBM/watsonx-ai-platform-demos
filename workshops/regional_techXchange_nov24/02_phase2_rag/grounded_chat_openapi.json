@@ -1,0 +1,176 @@
+{
+  "openapi": "3.0.1",
+  "info": {
+    "title": "IBM Cloud Authentication and Scoring API",
+    "description": "API to authenticate with IBM Cloud IAM and score data using a deployed machine learning model.",
+    "version": "1.0.0"
+  },
+  "servers": [
+    {
+      "url": "https://iam.cloud.ibm.com"
+    },
+    {
+      "url": "https://private.us-south.ml.cloud.ibm.com"
+    }
+  ],
+  "paths": {
+    "/identity/token": {
+      "post": {
+        "summary": "Retrieve IAM Token",
+        "description": "Retrieves an IAM token using the provided API key.",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "grant_type": {
+                    "type": "string",
+                    "example": "urn:ibm:params:oauth:grant-type:apikey"
+                  },
+                  "apikey": {
+                    "type": "string",
+                    "description": "Your IBM Cloud API key"
+                  }
+                },
+                "required": ["grant_type", "apikey"]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "IAM token retrieved successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "access_token": {
+                      "type": "string",
+                      "description": "The IAM token to be used for authorization"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/ml/v4/deployments/{deployment_id}/predictions": {
+      "post": {
+        "summary": "Score data using the deployed model",
+        "description": "Scores input data using the specified deployment.",
+        "parameters": [
+          {
+            "name": "deployment_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "example": "03737e24-4a27-4cc4-b967-dc19e991d8bf"
+            },
+            "description": "The ID of the deployed model"
+          },
+          {
+            "name": "version",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "example": "2021-05-01"
+            },
+            "description": "The version of the deployed model"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "input_data": {
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "fields": {
+                          "type": "array",
+                          "items": {
+                            "type": "string"
+                          }
+                        },
+                        "values": {
+                          "type": "array",
+                          "items": {
+                            "type": "array",
+                            "items": {
+                              "type": "string"
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                },
+                "required": ["input_data"]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Scoring request was successful",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "predictions": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "fields": {
+                            "type": "array",
+                            "items": {
+                              "type": "string"
+                            }
+                          },
+                          "values": {
+                            "type": "array",
+                            "items": {
+                              "type": "array",
+                              "items": {
+                                "type": "string"
+                              }
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "securitySchemes": {
+      "bearerAuth": {
+        "type": "http",
+        "scheme": "bearer",
+        "bearerFormat": "JWT"
+      }
+    }
+  },
+  "security": [
+    {
+      "bearerAuth": []
+    }
+  ]
+}
