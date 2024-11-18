@@ -62,7 +62,7 @@ def display_page2():
     Main function to display the second page of the Streamlit app,
     allowing users to input their API key, deployment URL, and generate a response.
     """
-    st.title("IBM Watson Assistant - Email Generator")
+    st.title("IBM Watson Assistant - DB2 RAG Assistant")
 
     # Initialize database and load environment variables
     init_db()
@@ -76,7 +76,7 @@ def display_page2():
     #     api_key, deployment_url = credentials
 
     # Get API key and deployment URL from configuration section
-    api_key, deployment_url_rag, deployment_url_write_email = display_configuration("rag")
+    api_key, deployment_url_write_email, deployment_url_rag = display_configuration("rag")
     deployment_url = deployment_url_rag
 
     # Default user question
@@ -101,6 +101,7 @@ def display_page2():
     # Button to generate an email
     if st.button("Query knowledge base"):
         with st.spinner("Sending request to IBM GenAI model..."):
+            print ("sending request to:", deployment_url)
             response = requests.post(
                 deployment_url,
                 json=payload_scoring,

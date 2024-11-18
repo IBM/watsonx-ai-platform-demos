@@ -50,7 +50,7 @@ def display_page1():
     load_dotenv()
 
     # Get API key and deployment URL from configuration section
-    api_key, deployment_url_rag, deployment_url_write_email = display_configuration("write_email")
+    api_key, deployment_url_write_email, deployment_url_rag  = display_configuration("write_email")
     deployment_url = deployment_url_write_email
     
     default_name = "Maximilian Jesch"
@@ -67,8 +67,10 @@ def display_page1():
     # Generate email when the button is clicked
     if st.button("Generate Email"):
         token = get_ibm_token(api_key)
+        print("using token ending with:", token[-5:])
         if token:
             with st.spinner("Sending request to IBM GenAI model..."):
+                print ("sending request to:", deployment_url)
                 response_text = send_scoring_request(token, deployment_url, client_problem, suggested_resolution, your_name)
             st.text_area("Generated Response", response_text, height=400)
         else:
