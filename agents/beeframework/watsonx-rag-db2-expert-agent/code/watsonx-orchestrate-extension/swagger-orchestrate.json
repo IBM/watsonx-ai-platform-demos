@@ -1,0 +1,108 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+      "title": "regional-techxchange",
+      "description": "regional-techxchange",
+      "contact": {},
+      "license": {
+        "name": "Apache-2.0"
+      },
+      "version": "1.0.0"
+    },
+    "servers": [
+      {
+        "description": "Server on Code Engine",
+        "url": "https://[YOUR_CODE_ENGINE_SERVER]/"
+      }
+    ],
+    "security": [
+      {
+        "basicAuth": []
+      }
+    ],
+    "tags": [
+      {
+        "name": "regional-techxchange",
+        "description": "regional-techxchange",
+        "externalDocs": {
+          "description": "regional-techxchange",
+          "url": "http://regional-techxchange.net"
+        }
+      }
+    ],
+    "paths": {
+      "/db2_agent_help": {
+        "post": {
+          "tags": [
+            "Demo"
+          ],
+          "summary": "DB2 Agent Help",
+          "description": "You provide a question and the expert agent provides a answer.\nExample question:\nI'm trying to execute a routine amed GET_CUSTOMER_DATA in DB2, but it returns an error: 'Routine not found in schema.' I double-checked the routine name, and it exists in the catalog.",
+          "operationId": "db2_agent_help",
+          "parameters": [],
+          "requestBody": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/EndpointDB2Input"
+                }
+              }
+            },
+            "required": true
+          },
+          "responses": {
+            "200": {
+              "description": "Ok",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/EndpointDB2Output"
+                  }
+                }
+              }
+            }
+          },
+          "security": []
+        }
+      }
+    },
+    "components": {
+      "schemas": {
+        "EndpointDB2Output": {
+          "required": [
+            "answer"
+          ],
+          "type": "object",
+          "properties": {
+            "answer": {
+              "type": "string"
+            }
+          },
+          "additionalProperties": false
+        },
+        "EndpointDB2Input": {
+          "required": [
+            "question"
+          ],
+          "type": "object",
+          "properties": {
+            "question": {
+              "type": "string"
+            }
+          },
+          "additionalProperties": false
+        }
+      },
+      "responses": {},
+      "parameters": {},
+      "examples": {},
+      "requestBodies": {},
+      "headers": {},
+      "securitySchemes": {
+        "basicAuth": {
+          "type": "http",
+          "scheme": "basic"
+        }
+      }
+    }
+  }

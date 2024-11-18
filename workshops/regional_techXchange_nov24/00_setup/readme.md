@@ -3,7 +3,7 @@
 This folder contains the basic setup for the workshop. It includes the data, the frontend app and the environment setup.
 
 ### Enviroment
-TODO: describe how to set this up on thechzone
+TODO: describe how to set this up on techzone
 
 ### Data
 To understand the scenario you will need the powerpoint presentation shown in the workshop. This will be available under the following link: [TODO](https://...)
