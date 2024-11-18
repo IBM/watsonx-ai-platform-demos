@@ -1,3 +1,3 @@
 # watsonx RAG DB2 expert agent (Bee Framework)
 
-[Details](/agents/beeframework/watsonx-rag-db2-expert-agent/README.md)
+[watsonx 'Retrieval Augmented Generation (RAG)' - DB2 expert agent (Bee Framework)](/agents/beeframework/watsonx-rag-db2-expert-agent/README.md)
