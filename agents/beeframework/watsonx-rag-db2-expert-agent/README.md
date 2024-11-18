@@ -15,14 +15,14 @@ We want to create an independent AI agent using tools to answer DB2 expert quest
 
 The AI agent should run as a stand-alone backend service (server) to be integrated into other applications and provide a REST API for the integration.
 
-We use the Bee Framework and build a typescript server to realize this functionality.
+We use the `Bee Framework` and build a `TypeScript` server to realize this functionality.
 
 We call our AI agent: `DB2 expert agent` 
 
 ## 1. Overview of the basic architecture of the `Retrieval Augmented Generation (RAG)` setup
 
-We have a `Retrieval Augmented Generation (RAG)` setup for DB2 expert questions made with the `Watson prompt lab`.
-For the deployment use of a `Jupyther Notebook` function, calls are being deployed as a Watsonx deployment with access to a `Milvus DB`.
+We have a `Retrieval Augmented Generation (RAG)` setup for DB2 expert questions made with the `watsonx prompt lab`.
+For the deployment use of a `Jupyter Notebook` function, calls are being deployed as a Watsonx deployment with access to a `Milvus DB`.
 
 So, we can get results from this deployment using the provided REST endpoints by the deployment.
 
