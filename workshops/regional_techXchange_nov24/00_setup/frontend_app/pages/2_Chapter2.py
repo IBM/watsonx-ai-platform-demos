@@ -69,14 +69,14 @@ def display_page2():
     load_dotenv()
 
     # Retrieve stored credentials or default values
-    api_key = os.getenv("API_KEY")
-    deployment_url = os.getenv("DEPLOYMENT_URL")
-    credentials = get_credentials()
-    if credentials:
-        api_key, deployment_url = credentials
+    # api_key = os.getenv("API_KEY")
+    # deployment_url = os.getenv("DEPLOYMENT_URL")
+    # credentials = get_credentials()
+    # if credentials:
+    #     api_key, deployment_url = credentials
 
     # Get API key and deployment URL from configuration section
-    api_key, deployment_url_rag, deployment_url_write_email = display_configuration()
+    api_key, deployment_url_rag, deployment_url_write_email = display_configuration("rag")
     deployment_url = deployment_url_rag
 
     # Default user question
