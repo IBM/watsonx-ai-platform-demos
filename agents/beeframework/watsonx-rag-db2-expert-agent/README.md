@@ -36,15 +36,15 @@ The image below shows a simplified architecture.
 
 ## 2. Overview of the basic architecture of the `DB2 expert agent` setup
 
-Finally, we run our server, which contains the AI agent with the tool on the serverless container platform `IBM Cloud Code Engine`. The container is save in the `IBM Cloud Container Registry`.
+Finally, we run our server, which contains the AI agent with the tool on the serverless container platform `IBM Cloud Code Engine`. The container is saved in the `IBM Cloud Container Registry`.
 
 The image below shows a simplified architecture.
 
-1. We ask a question using the REST Endpoint of the TypeScript server running on Code Engine in a container
+1. We ask a question using the REST endpoint of the TypeScript server running on IBM Cloud Code Engine in a container
 2. The AI agent uses the LLM to do all the needed steps of thinking, reasoning, and final answers.
 3. The AI agent notices that the tool is the best to answer DB2-related questions with the DB2 expert tool.
 4. The DB2 expert invokes the REST endpoint of the deployment RAG for the DB2 questions
-5. The deployment searches for the best-fitting content in the Milvus database
+5. The deployment searches for the best-fitting content in the `Milvus` database
 6. The deployment LLM generates the best answer based on the results we provided
 
 ![](/agents/beeframework/watsonx-rag-db2-expert-agent/images/watsonx-rag-db2-expert-agent-02.png)
