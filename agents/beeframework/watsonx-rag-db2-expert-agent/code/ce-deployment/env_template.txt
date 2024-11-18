@@ -1,0 +1,29 @@
+# Mandatory Configuration
+# ##########################################
+
+# IBM Cloud
+export IBM_CLOUD_RESOURCE_GROUP=default
+export IBM_CLOUD_REGION="us-south"
+export IBM_CLOUD_API_KEY=YOUR_IBM_CLOUD_API_KEY
+
+# Code Engine
+export CODEENGINE_PROJECT_NAME=rag-agent-demo-project
+export CODEENGINE_APP_NAME=rag-agent-demo
+
+# Container registry
+export CR_RESOURCE_GROUP=default
+export CR_REGION=global
+export CR=icr.io
+export CR_REPOSITORY=rag-agent-demo-repo
+
+# Optional Configuration
+# #######################
+
+export CODEENGINE_CR_EMAIL="yourname@yourcompany.example"
+export CODEENGINE_CR_USERNAME="iamapikey"
+export CODEENGINE_CR_PASSWORD=$IBM_CLOUD_API_KEY
+export CODEENGINE_CR_ACCESS_NAME=$CR
+export CI_NAME=rag-agent-demo-image
+export CI_TAG=""
+export CODEENGINE_CONFIGMAP_NAME="rag-agent-demo-values"
+
