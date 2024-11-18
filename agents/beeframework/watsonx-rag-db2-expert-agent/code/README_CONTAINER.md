@@ -2,6 +2,10 @@
 
 * Ensure you installed [Podman](https://podman.io/)
 
+The following diagram shows the simplified architecture for running the server as a TypeScript application and as a container locally.
+
+![](/agents/beeframework/watsonx-rag-db2-expert-agent/images/watsonx-rag-db2-expert-agent-03.png)
+
 ## 1. Build the container
 
 * Build the container on MacOS

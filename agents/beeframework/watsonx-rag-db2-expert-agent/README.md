@@ -36,7 +36,7 @@ The image below shows a simplified architecture.
 
 ## 2. Overview of the basic architecture of the `DB2 expert agent` setup
 
-Finally, we run our server, which contains the AI agent with the tool on the serverless container platform IBM Cloud Code Engine.
+Finally, we run our server, which contains the AI agent with the tool on the serverless container platform `IBM Cloud Code Engine`. The container is save in the `IBM Cloud Container Registry`.
 
 The image below shows a simplified architecture.
 
@@ -48,6 +48,11 @@ The image below shows a simplified architecture.
 6. The deployment LLM generates the best answer based on the results we provided
 
 ![](/agents/beeframework/watsonx-rag-db2-expert-agent/images/watsonx-rag-db2-expert-agent-02.png)
+
+The simplified TypeScript backend server code dependencies.
+
+![](/agents/beeframework/watsonx-rag-db2-expert-agent/images/watsonx-rag-db2-expert-agent-04.png)
+
 
 ## 3. Setup
 
