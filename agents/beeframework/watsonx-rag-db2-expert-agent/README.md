@@ -47,7 +47,7 @@ The image below shows a simplified architecture.
 5. The deployment searches for the best-fitting content in the Milvus database
 6. The deployment LLM generates the best answer based on the results we provided
 
-![](agents/beeframework/watsonx-rag-db2-expert-agent/images/watsonx-rag-db2-expert-agent-02.png)
+![](/agents/beeframework/watsonx-rag-db2-expert-agent/images/watsonx-rag-db2-expert-agent-02.png)
 
 ## 3. Setup
 
