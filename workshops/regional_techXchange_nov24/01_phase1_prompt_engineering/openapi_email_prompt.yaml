@@ -1,0 +1,62 @@
+openapi: 3.0.1
+info:
+  title: Text Generation API
+  description: This API generates a response text based on input prompt variables.
+  version: "1.0.0"
+servers:
+  - url: https://private.us-south.ml.cloud.ibm.com/ml/v1
+
+paths:
+  /deployments/write_a_nice_email_deployment/text/generation_stream:
+    post:
+      summary: Generate a response text
+      description: Generates a response based on provided prompt variables.
+      parameters:
+        - name: version
+          in: query
+          required: true
+          description: API version to use.
+          schema:
+            type: string
+            example: "2021-05-01"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                parameters:
+                  type: object
+                  properties:
+                    prompt_variables:
+                      type: object
+                      properties:
+                        Initial_Client_Problem:
+                          type: string
+                          description: The problem described by the client.
+                          example: "I'm trying to execute a routine named GET_CUSTOMER_DATA in DB2, but it returns an error: 'Routine not found in schema.' I double-checked the routine name, and it exists in the catalog."
+                        My_suggested_Resolution:
+                          type: string
+                          description: Suggested resolution to the client's problem.
+                          example: "Could be due to the schema not being specified in the call. Advise user to prefix the routine with the schema name, e.g., schema_name.GET_CUSTOMER_DATA."
+      responses:
+        '200':
+          description: Response generated successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  generated_text:
+                    type: string
+                    description: Generated response text.
+      security:
+        - bearerAuth: []
+
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
