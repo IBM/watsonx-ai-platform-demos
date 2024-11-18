@@ -2,8 +2,12 @@
 
 This code is in the context of the workshop [`regional_techXchange_nov24`](/workshops/regional_techXchange_nov24/README.md).
 
-* 0. Motivation
-* 1. Overview of the basic architecture of the `Retrieval Augmented Generation (RAG)` setup
+0. Motivation
+1. Overview of the basic architecture of the `Retrieval Augmented Generation (RAG)` 
+2. Overview of the basic architecture of the `DB2 expert agent` 
+3. Setup
+    3.1 Set up the RAG environment
+    3.2 Set up the TypeScript server
 
 # 0. Motivation
 
@@ -52,7 +56,7 @@ The image below shows a simplified architecture.
 Follow the steps for the [setup steps in the workshop documentation for the regional_techXchange_nov24 workshop](workshops/regional_techXchange_nov24/00_setup/readme.md) .
 
 
-### 3.2 Set up the typescript server
+### 3.2 Set up the TypeScript server
 
 Therefore, you can follow the code documentation.
 
