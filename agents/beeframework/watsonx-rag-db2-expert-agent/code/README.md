@@ -16,7 +16,26 @@ If you want to run the application in a container, here are the two options we p
 
 The following instructions are for the setup on a MacOS environment.
 
-## 1.1. Install typescript
+# 1.1 Prerequisits
+
+* [Brew (for Mac)](https://brew.sh/)
+* [Node](https://nodejs.org/en/download/package-manager)
+* npm and yarn
+* [corepack](https://yarnpkg.com/corepack)
+* Optionally nvm
+* [Podman Desktop](https://podman-desktop.io/)
+* Access to IBM watsonx.ai
+
+Example verification:
+
+```sh
+node -v
+v20.17.0
+npm -v
+10.8.2
+```
+
+## 1.2 Install typescript
 
 ```sh
 sudo npm install typescript -g
@@ -24,7 +43,7 @@ sudo npm i tsx -g
 sudo npm i typescript-rest-swagger -g
 ```
 
-## 1.2. Install the needed package
+## 1.3 Install the needed package
 
 The `yarn ensure-env` invokes  `"cp -n .env.template .env || true"` for the script specification in the `package.json`.
 It creates a copy of the `.env.template`.
@@ -38,7 +57,7 @@ yarn install
 yarn ensure-env
 ```
 
-## 1.3. Insert the needed value into the newly create `.env` file with variables
+## 1.4 Insert the needed value into the newly create `.env` file with variables
 
 ```sh
 # WatsonX
