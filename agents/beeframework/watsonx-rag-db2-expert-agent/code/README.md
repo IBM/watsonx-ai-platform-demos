@@ -1,14 +1,16 @@
 # Overview
 
+This readme is about running the example agent locally on a TypeScript server. The example implementation does not connect to any external database for the `Bee Agent configuration` to save a status or more.
+
 If you want to run the application in a container, here are the two options we provide:
 
-* Run as a container locally
+1. Run as a container locally
 
-You can run the example application locally in a container with Podman. To do this, please follow the instructions in the [README_CONTAINER.md](/agents/beeframework/watsonx-rag-db2-expert-agent/code/README.md) file.
+  You can run the example application locally in a container with Podman. To do this, please follow the instructions in the [README_CONTAINER.md](/agents/beeframework/watsonx-rag-db2-expert-agent/code/README.md) file.
 
-* Run the container on the IBM Cloud Code Engine
+2. Run the container on the IBM Cloud Code Engine
 
-You can run the example application container in IBM Cloud Code Engine. To do this, please follow the instructions in this [README.md](/03_bee_agent/code/bee_local_app_db2_rag_container_ce_node_server/ce-deployment/README.md) file.
+  You can run the example application container in IBM Cloud Code Engine. To do this, please follow the instructions in this [README.md](/03_bee_agent/code/bee_local_app_db2_rag_container_ce_node_server/ce-deployment/README.md) file.
 
 # 1. Setup
 
