@@ -71,7 +71,7 @@ yarn start:prod
 ## 2.3 Open Swagger-UI in browser
 
 ```sh
-http://localhost:3000/docs
+http://localhost:8080/docs
 ```
 
 ## 2.4 Invoke endpoint
