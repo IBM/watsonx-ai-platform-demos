@@ -61,11 +61,11 @@ The simplified TypeScript backend server code dependencies.
 Follow the steps for the [setup steps in the workshop documentation for the regional_techXchange_nov24 workshop](workshops/regional_techXchange_nov24/00_setup/readme.md) .
 
 
-### 3.2 Set up the TypeScript server
+### 3.2 Set up and run the example agent in the TypeScript server
 
-Therefore, you can follow the code documentation.
+Therefore, you can follow the documentation in the source code folder.
 
-[Source code](/agents/beeframework/watsonx-rag-db2-expert-agent/code/README.md)
+[Source code folder](/agents/beeframework/watsonx-rag-db2-expert-agent/code/README.md)
 
 What we did before:
 
