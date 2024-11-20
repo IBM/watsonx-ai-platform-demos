@@ -33,11 +33,11 @@ The diagram below shows the simplified dependencies of the implementation in two
 
 1. The implementation of the agent with Out-Of-The-Box and custom tools.
 
-![](/images/architectue.drawio.png)
+![](/agents/beeframework/watsonx-simple-travel-agent/images/architectue.drawio.png)
 
 2. The observability of the agent with an external tool
 
-![](/images/architectue-observe.drawio.png)
+![](/agents/beeframework/watsonx-simple-travel-agent/images/architectue-observe.drawio.png)
 
 ## 3.  📦 System Requirements
 
