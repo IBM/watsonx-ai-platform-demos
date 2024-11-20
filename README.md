@@ -9,6 +9,7 @@ The example AI application in this repo leverages the following main components:
 * [IBM watsonx Orchestrate](https://www.ibm.com/products/watsonx-orchestrate)
 * [InstructLab](https://github.com/instructlab/instructlab)
 * [Bee Agent Framework](https://github.com/i-am-bee/bee-agent-framework)
+* [IBM watsonx.ai Flows Engine](https://github.com/IBM/wxflows)
 
 <kbd><img src="documentation/watsonx-platform-demos.png" /></kbd>
 
@@ -206,6 +207,10 @@ To evaluate foundation models, watsonx.governance provides mechanisms to monitor
 * watsonx.governance
     * [Documentation](https://www.ibm.com/docs/en/watsonx/saas?topic=governing-ai-assets)
     * [GenAI Quality Metrics for third Party Models in watsonx](https://heidloff.net/article/generative-ai-quality-metrics-watsonx-governance-third-party-models/)
+* watsonx.ai Flows Engine
+     * [GitHub Repo](https://github.com/IBM/wxflows)
+     * [Documentation](https://wxflows.ibm.stepzen.com/docs)
+     * [YouTube tutorials](https://www.youtube.com/playlist?list=PLzpeuWUENMK3jYU3Du7qEeeq3CeWm4jJV)
 
 ## Get started
 
@@ -230,3 +235,4 @@ The demonstrations of this repo have been implemented by the IBM DACH CSM team i
 * Ivan Iliash
 * Niklas Kopp
 * Alexander Seelert
+* Thomas Südbröcker
