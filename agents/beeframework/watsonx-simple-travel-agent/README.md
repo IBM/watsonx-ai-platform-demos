@@ -13,7 +13,7 @@ Table of contents:
 
 ## 1. Motivation
 
-This repository wants to show how to implement a Bee Agent configuration and implementation with one custom Bee Agent tool and one Out-Of-The-Box tool.
+This example wants to show how to implement a Bee Agent configuration and implementation with one custom Bee Agent tool and one Out-Of-The-Box tool.
 
 The agent should be able to interact in a chat to suggest vacation offerings and tell the temperature in the proposed location.
 
