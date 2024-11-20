@@ -171,6 +171,14 @@ _Note:_ Configuration file is [infra/observe/.env.docker](./infra/observe/.env.d
 npm run start src/agent_observe.ts
 ```
 
-### Step 3: Run the agent
+### Step 3: Verify visualized trace
 
 See visualized trace in MLFlow web application [`http://127.0.0.1:8080/#/experiments/0`](http://localhost:8080/#/experiments/0)
+
+1. Select the new entry
+
+![](/agents/beeframework/watsonx-simple-travel-agent/images/oberve-01.png)
+
+2. Inspect the steps
+
+![](/agents/beeframework/watsonx-simple-travel-agent/images/oberve-02.png)
