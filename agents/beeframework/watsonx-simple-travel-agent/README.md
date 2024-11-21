@@ -22,14 +22,14 @@ Therefore, we need two tools to get the information we need.
 * Connect to another large language model to suggest the locations (custom tool)
 * Connect to a weather server to get the actual weather information (Out-Of-The-Box tool)
 
-We want to ask a question later that requires the agent to use both tools to answer, like the following question.
+We want to ask a question later that requires the agent to use both tools to answer, such as the following.
 
 > "What is the best vacation city in Europe, and can you tell me the current temperature in this city?"
 
 
 ## 2. Architecture
 
-The diagram below shows the simplified dependencies of the implementation in two levels.
+The diagram below shows the simplified dependencies of the implementation on two levels.
 
 1. The implementation of the agent with Out-Of-The-Box and custom tools.
 
@@ -171,7 +171,7 @@ _Note:_ Configuration file is [infra/observe/.env.docker](./infra/observe/.env.d
 npm run start src/agent_observe.ts
 ```
 
-### Step 3: Verify visualized trace
+### Step 3: Verify the visualized trace
 
 See visualized trace in MLFlow web application [`http://127.0.0.1:8080/#/experiments/0`](http://localhost:8080/#/experiments/0)
 
