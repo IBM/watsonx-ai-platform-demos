@@ -1,0 +1,19 @@
+[{
+    "type": "function",
+    "function": {
+        "name": "DB2AgentTool",
+        "description": "This tool is an expert for DB2-related technical questions or issues.",
+        "parameters": {
+            "type": "object",
+            "properties": {
+                "question": {
+                    "type": "string",
+                    "description": "Question or issue."
+                }
+            },
+            "required": [
+                "question"
+            ]
+        }
+    }
+ }]

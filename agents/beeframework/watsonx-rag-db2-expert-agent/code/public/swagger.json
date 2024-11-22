@@ -1,0 +1,97 @@
+{
+	"openapi": "3.0.0",
+	"components": {
+		"examples": {},
+		"headers": {},
+		"parameters": {},
+		"requestBodies": {},
+		"responses": {},
+		"schemas": {
+			"EndpointDB2Output": {
+				"properties": {
+					"answer": {
+						"type": "string"
+					}
+				},
+				"required": [
+					"answer"
+				],
+				"type": "object",
+				"additionalProperties": false
+			},
+			"EndpointDB2Input": {
+				"properties": {
+					"question": {
+						"type": "string"
+					}
+				},
+				"required": [
+					"question"
+				],
+				"type": "object",
+				"additionalProperties": false
+			}
+		},
+		"securitySchemes": {}
+	},
+	"info": {
+		"title": "regional-techxchange",
+		"version": "0.0.1",
+		"description": "regional-techxchange",
+		"license": {
+			"name": "Apache-2.0"
+		},
+		"contact": {}
+	},
+	"paths": {
+		"/db2_agent_help": {
+			"post": {
+				"operationId": "db2_agent_help",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/EndpointDB2Output"
+								}
+							}
+						}
+					}
+				},
+				"description": "You provide a question and the expert agent provides a answer.\nExample question:\nI'm trying to execute a routine amed GET_CUSTOMER_DATA in DB2, but it returns an error: 'Routine not found in schema.' I double-checked the routine name, and it exists in the catalog.",
+				"summary": "DB2 agent help",
+				"tags": [
+					"Demo"
+				],
+				"security": [],
+				"parameters": [],
+				"requestBody": {
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/EndpointDB2Input"
+							}
+						}
+					}
+				}
+			}
+		}
+	},
+	"servers": [
+		{
+			"url": "/"
+		}
+	],
+	"tags": [
+		{
+			"name": "regional-techxchange",
+			"description": "regional-techxchange",
+			"externalDocs": {
+				"description": "regional-techxchange",
+				"url": "http://regional-techxchange.net"
+			}
+		}
+	]
+}
