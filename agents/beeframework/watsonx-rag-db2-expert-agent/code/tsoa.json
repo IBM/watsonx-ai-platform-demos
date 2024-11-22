@@ -1,0 +1,20 @@
+{
+    "entryFile": "src/index.ts",
+    "noImplicitAdditionalProperties": "throw-on-extras",
+    "spec": {
+      "outputDirectory": "public",
+      "specVersion": 3,
+      "tags": [
+            {
+              "name": "Demo",
+              "description": "Demo",
+              "externalDocs": {
+                "description": "Demo",
+                "url": "http://example.com"
+              }
+            }
+          ]
+    },
+    "routesDir": "./src",
+    "controllerPathGlobs": ["./src/endpoint*.ts"]
+  }

@@ -1,0 +1,63 @@
+##############################
+#           BUILD
+##############################
+FROM node:20-alpine3.19 As builder
+WORKDIR /app
+
+COPY ./public ./public
+COPY ./src ./src
+COPY ./.env ./.env
+COPY ./generate_env-config.sh ./generate_env-config.sh
+COPY ./docker_entrypoint.sh ./docker_entrypoint.sh
+COPY ./.yarnrc.yml ./.yarnrc.yml
+COPY ./package.json ./package.json
+COPY ./tsconfig.json ./tsconfig.json
+COPY ./tsoa.json ./tsoa.json
+COPY ./yarn.lock ./yarn.lock
+
+RUN npm install typescript -g
+RUN npm i tsx -g
+RUN npm i typescript-rest-swagger -g
+RUN npm install typescript -g
+RUN npm install tsx@4.19.2 -g
+RUN corepack yarn install --immutable
+RUN corepack yarn build
+
+##############################
+#           PRODUCTION
+##############################
+FROM node:20-alpine3.19
+
+ENV NODE_ENV production
+
+WORKDIR /app
+
+#### For production! ######
+COPY --from=builder /app/.yarn ./yarn
+COPY --from=builder /app/dist ./dist
+COPY --from=builder /app/node_modules ./node_modules
+#### For production! ######
+
+COPY --from=builder /app/public ./public
+COPY --from=builder /app/.env ./.env
+COPY --from=builder /app/.yarnrc.yml ./.yarnrc.yml
+COPY --from=builder /app/tsconfig.json ./tsconfig.json
+COPY --from=builder /app/tsoa.json ./tsoa.json
+COPY --from=builder /app/package.json ./package.json
+COPY --from=builder /app/docker_entrypoint.sh ./docker_entrypoint.sh
+COPY --from=builder /app/generate_env-config.sh ./generate_env-config.sh
+
+# set user rights to allow the bower user to setup custom lib folder
+RUN chown -R node:node .
+RUN chown -R node:node ./dist
+RUN chown -R node:node ./node_modules
+RUN chown -R node:node ./public
+RUN chmod g+rwX ./public
+RUN chmod g+rwX ./dist
+RUN chmod g+rwX ./node_modules
+RUN chmod g+rwX .
+
+USER node
+
+EXPOSE 8080 
+CMD ["/bin/sh", "docker_entrypoint.sh"]
