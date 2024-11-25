@@ -5,6 +5,9 @@ To follow the scenario of the workshop, you will need the powerpoint presentatio
 
 This part will be mainly in the watsonx UI. So there will be no code to run.
 
+If you want to see an in depth explanation of the content of this chapter, you can also refer to this youtube [video](https://www.youtube.com/watch?v=ztdsheuziVA&ab_channel=MaximilianJesch)
+![alt text](images/image-99.png)
+
 ## Basics: RAG 101
 
 ![alt text](images/image.png)
