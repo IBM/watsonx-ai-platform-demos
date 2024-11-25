@@ -3,13 +3,11 @@
 This folder contains the basic setup for the workshop. It includes the data, the frontend app and the environment setup.
 
 ### Enviroment
-<<<<<<< HEAD
+
 go to this [link](https://techzone.ibm.com/my/reservations/create/6622b2b48fcc5c001e14b31e) to reserve your environment. You will need to login with your IBM ID.
 ![alt text](image-1.png)
 You will receive an email with a link to the environment. Click on the link and you will be redirected to the environment. 
-=======
-TODO: describe how to set this up on techzone
->>>>>>> 4cc2cc4adad56f5a0d7a12a2a3b2b54da416e0e4
+
 
 ### Data
 To understand the scenario you will need the powerpoint presentation shown in the workshop. This will be available under the following link: [TODO](https://...)
