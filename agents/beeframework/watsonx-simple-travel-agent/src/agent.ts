@@ -38,7 +38,7 @@ const template = new PromptTemplate({
 /// 2. The integration to watsonx is set up.
 /// *******************************
 const llm_lama = new WatsonXLLM({
-  modelId: "meta-llama/llama-3-70b-instruct",
+  modelId: "mistralai/mixtral-8x7b-instruct-v01",
   projectId: process.env.WATSONX_PROJECT_ID,
   baseUrl: process.env.WATSONX_BASE_URL,
   apiKey: process.env.WATSONX_API_KEY,
