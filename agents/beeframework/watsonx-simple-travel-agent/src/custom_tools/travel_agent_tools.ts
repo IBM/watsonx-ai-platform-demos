@@ -40,7 +40,7 @@ ToolRunOptions>{
         run: RunContext<this>,
       ) {
     const llm_granite = new WatsonXLLM({
-            modelId: "ibm/granite-13b-chat-v2",
+            modelId: "mistralai/mixtral-8x7b-instruct-v01",
             projectId: process.env.WATSONX_PROJECT_ID,
             baseUrl: process.env.WATSONX_BASE_URL,
             apiKey: process.env.WATSONX_API_KEY,
