@@ -13,6 +13,8 @@
     "start:appOneLLMTwoAgents": "tsx src/appOneLLMTwoAgents.ts",
     "start:appOneLocalLLMTwoAgents": "tsx src/appOneLocalLLMTwoAgents.ts",
     "infra:start-code-interpreter": "yarn _docker compose up bee-code-interpreter",
+    "infra:start": "podman compose --profile=${npm_config_profile:=all} up --detach --wait",
+    "infra:stop": "podman compose --profile=${npm_config_profile:=all} down",
     "infra:stop-all": "yarn _docker compose down",
     "infra:clean-all": "yarn _docker compose down --volumes",
     "clean": "rimraf dist",
@@ -35,6 +37,7 @@
   "dependencies": {
     "@ibm-generative-ai/node-sdk": "3.2.3",
     "bee-agent-framework": "0.0.11",
+    "bee-observe-connector": "^0.0.6",
     "dotenv": "16.4.5",
     "express": "4.19.2",
     "ollama": "0.5.8",

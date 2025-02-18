@@ -29,7 +29,7 @@ const reader = createConsoleReader();
 
 let transcript:string = readFileSync(transcriptFile, 'utf-8').split("\\n").join("\n")
 const llmResponse = await generateSummary(transcript)
-let transcriptSummary = llmResponse.getTextContent()
+let transcriptSummary = llmResponse.result.text
 reader.write(`Response LLM 🤖 (text) : `, transcriptSummary);
 
 //////////////////////////////////////////////////////////////////

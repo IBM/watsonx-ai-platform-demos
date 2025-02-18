@@ -24,6 +24,8 @@ import { FrameworkError, Logger, PromptTemplate } from "bee-agent-framework";
 import { GenerateCallbacks } from "bee-agent-framework/llms/base";
 import { BeeAgentTemplates } from "bee-agent-framework/agents/bee/types";
 import { readFileSync } from 'fs';
+import { createTraceConnector } from '.././infra/observe/mlflow.ts';
+import { create } from "domain";
 
 const instructionFile = './prompts/instructionAgentOne.md'
 const reader = createConsoleReader();
@@ -55,7 +57,8 @@ const agent = new BeeAgent({
     ]
 });
 
-export async function runAgentUpdateRouterIfNecessary(transcriptSummary:string) {   
+export async function runAgentUpdateRouterIfNecessary(transcriptSummary:string) { 
+    const traceConnector = createTraceConnector();  
     try {
         //console.log("Agent UpdateRouterIfNecessary Prompt Addition:")
         //console.log(transcriptSummary)
@@ -71,6 +74,7 @@ export async function runAgentUpdateRouterIfNecessary(transcriptSummary:string) 
                 },
             },
             )
+            .middleware(traceConnector)
             .observe((emitter) => {
                 emitter.on("start", () => {
                     reader.write(`Agent UpdateRouterIfNecessary 🤖 : `, "starting new iteration");
