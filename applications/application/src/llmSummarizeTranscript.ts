@@ -17,31 +17,53 @@
 import { readFileSync } from 'fs';
 import "dotenv/config.js";
 import { createConsoleReader } from "./io.js";
-import { WatsonXLLM } from "bee-agent-framework/adapters/watsonx/llm";
+import { WatsonXChatLLM } from "bee-agent-framework/adapters/watsonx/chat";
 import { WatsonXChatLLMPresetModel } from 'bee-agent-framework/adapters/watsonx/chatPreset';
+import { BeeAgent } from 'bee-agent-framework/agents/bee/agent';
+import { UnconstrainedMemory } from "bee-agent-framework/memory/unconstrainedMemory";
+import { PromptTemplate } from "bee-agent-framework";
+import { createTraceConnector } from '.././infra/observe/mlflow.ts';
+
+
+const WATSONX_MODEL = process.env.WATSONX_MODEL as WatsonXChatLLMPresetModel
+const summarizer = WatsonXChatLLM.fromPreset(WATSONX_MODEL, {
+    apiKey: process.env.WATSONX_API_KEY,
+    projectId: process.env.WATSONX_PROJECT_ID,
+    baseUrl: process.env.WATSONX_BASE_URL,   
+    parameters: (defaultParameters) => ({
+        ...defaultParameters,
+        decoding_method: "greedy",
+        max_new_tokens: 1500,
+    })
+})
+
+const instructionFileLLM = './prompts/instructionLLM.md'
+const instructionLLM = readFileSync(instructionFileLLM, 'utf-8').split("\\n").join("\n")
+
+const agent = new BeeAgent({
+    llm: summarizer,
+    memory: new UnconstrainedMemory(),
+    templates: {
+        user: new PromptTemplate({
+            variables: ["input"],
+            template: instructionLLM + `{{input}}`,
+        }),
+    },
+    tools: [],
+});    
 
 export async function generateSummary(transcript:string) {
     const reader = createConsoleReader();
-
-    const WATSONX_MODEL = process.env.WATSONX_MODEL as WatsonXChatLLMPresetModel
-    const llm = new WatsonXLLM({
-        modelId: WATSONX_MODEL,
-        projectId: process.env.WATSONX_PROJECT_ID,
-        baseUrl: process.env.WATSONX_BASE_URL,
-        apiKey: process.env.WATSONX_API_KEY,
-        parameters: {
-            decoding_method: "greedy",
-            max_new_tokens: 1500,
-        }
-    });
-
-    const instructionFileLLM = './prompts/instructionLLM.md'
-    const instructionLLM = readFileSync(instructionFileLLM, 'utf-8').split("\\n").join("\n")
+    const traceConnector = createTraceConnector();
     let prompt = instructionLLM + "\n\n" + transcript
     console.log("Prompt LLM:")
     console.log(prompt)
     
-    return await llm.generate(prompt).observe((emitter) => {
+    
+
+    return await agent.run( {prompt} )
+    .middleware(traceConnector)
+    .observe((emitter) => {
         emitter.on("start", () => {
             reader.write(`LLM 🤖 : `, "starting new iteration");
         });

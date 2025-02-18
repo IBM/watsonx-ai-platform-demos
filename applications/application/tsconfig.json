@@ -2,12 +2,14 @@
   "compilerOptions": {
     "target": "ES2022",
     "module": "NodeNext",
-    "rootDir": "src",
+    "rootDir": ".",
     "moduleResolution": "NodeNext",
     "allowSyntheticDefaultImports": true,
     "isolatedModules": true,
     "useDefineForClassFields": true,
     "incremental": false,
+    "noEmit": true,
+    "allowImportingTsExtensions": true,
     "moduleDetection": "auto",
     "baseUrl": ".",
     "types": ["node"],
@@ -30,5 +32,5 @@
     "skipLibCheck": true,
     "useUnknownInCatchVariables": false
   },
-  "include": [ "src" ]
+  "include": [ "src", "infra/observe" ]
 }

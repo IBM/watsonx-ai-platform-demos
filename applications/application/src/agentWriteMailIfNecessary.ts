@@ -24,6 +24,7 @@ import { FrameworkError, Logger, PromptTemplate } from "bee-agent-framework";
 import { GenerateCallbacks } from "bee-agent-framework/llms/base";
 import { WriteMailTool } from "./toolWriteMail.js";
 import { BeeAgentTemplates } from "bee-agent-framework/agents/bee/types";
+import { createTraceConnector } from '.././infra/observe/mlflow.ts';
 
 const instructionFile = './prompts/instructionAgentTwo.md'
 const reader = createConsoleReader();
@@ -58,6 +59,7 @@ const agent = new BeeAgent({
 
 export async function runAgentWriteMailIfNecessary(routerUpdated:string, transcriptSummary:string) {
     let prompt = routerUpdated + transcriptSummary
+    const traceConnector = createTraceConnector();
     try {
         console.log("Agent WriteMailIfNecessary Prompt Addition:")
         console.log(prompt)
@@ -73,6 +75,7 @@ export async function runAgentWriteMailIfNecessary(routerUpdated:string, transcr
                 },
             },
             )
+            .middleware(traceConnector)
             .observe((emitter) => {
                 emitter.on("start", () => {
                     reader.write(`Agent WriteMailIfNecessary 🤖 : `, "starting new iteration");

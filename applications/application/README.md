@@ -45,6 +45,8 @@ yarn start
 // to udpate swagger: tsoa spec
 
 // optional: yarn infra:start-code-interpreter
+
+// optional: 'npm run infra:start --profile=observe' for traceability via Bee Observe and MLFlow
 ```
 
 ## REST Endpoints

@@ -1257,7 +1257,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"bee-agent-framework@npm:^0.0.11":
+"bee-agent-framework@npm:0.0.11":
   version: 0.0.11
   resolution: "bee-agent-framework@npm:0.0.11"
   dependencies:
@@ -1296,6 +1296,18 @@ __metadata:
     openai: ^4.56.0
     openai-chat-tokens: ^0.2.8
   checksum: 10c0/fb4a6c43fbf48cecd9971df86aada59ac5fe097a736c05b69cc17d4ff886a648b38681c1d4d78723f36128341c66ec5d6669e8be43a3c0fd80bdfe70c68db7f7
+  languageName: node
+  linkType: hard
+
+"bee-observe-connector@npm:^0.0.6":
+  version: 0.0.6
+  resolution: "bee-observe-connector@npm:0.0.6"
+  dependencies:
+    openapi-fetch: "npm:^0.11.1"
+    remeda: "npm:^2.15.2"
+  peerDependencies:
+    bee-agent-framework: ">=0.0.27 <0.1.0"
+  checksum: 10c0/823fb11f2f7e9e5583525c71c3f5975c9fe49fc82008d1afd3c9c8b760ce185d86e9f535dc5ae6098d2952ca2689b0f159125cc374062e4084e9a5603d5679c7
   languageName: node
   linkType: hard
 
@@ -3302,12 +3314,28 @@ __metadata:
   languageName: node
   linkType: hard
 
+"openapi-fetch@npm:^0.11.1":
+  version: 0.11.3
+  resolution: "openapi-fetch@npm:0.11.3"
+  dependencies:
+    openapi-typescript-helpers: "npm:^0.0.13"
+  checksum: 10c0/0e88b44a35d8214b45e65bb5dbaf9cc0e16b44a4586151398ce1d87d514197dfab302e822b4cdf449d9a7e333f8eeeb8d2b0516404319fafd3eba8a2d9805448
+  languageName: node
+  linkType: hard
+
 "openapi-fetch@npm:^0.8.2":
   version: 0.8.2
   resolution: "openapi-fetch@npm:0.8.2"
   dependencies:
     openapi-typescript-helpers: "npm:^0.0.5"
   checksum: 10c0/b8c43cf559f06a29a6a7d0da4a5a0130b5b42c6ce3ce75afe2db81104ae686374bd29e9d115fb119ca905d2194fe686c4aab8145a60f50cab6984b48f39b16a3
+  languageName: node
+  linkType: hard
+
+"openapi-typescript-helpers@npm:^0.0.13":
+  version: 0.0.13
+  resolution: "openapi-typescript-helpers@npm:0.0.13"
+  checksum: 10c0/2315b7f7e3a7e991a11259daadd65b8d4d33c800d385c99e4a6a648b47deffd08a9eef7a39ded8c741172720621681d645de5078507271830dc28c4e69ae8a44
   languageName: node
   linkType: hard
 
@@ -3789,6 +3817,15 @@ __metadata:
   dependencies:
     type-fest: "npm:^4.23.0"
   checksum: 10c0/89541dd8677d03c771f067a706ef1f76ce2fa4032d35abce6b3c60c23b4a576389cb37b31882e905595eb1fc694e76e2c71eee7304e9f7d3d09edf1014b1b744
+  languageName: node
+  linkType: hard
+
+"remeda@npm:^2.15.2":
+  version: 2.20.2
+  resolution: "remeda@npm:2.20.2"
+  dependencies:
+    type-fest: "npm:^4.33.0"
+  checksum: 10c0/9bb1099a97f124f99a3ed00acd5e5529a8eb06b40978c4830f2acad7f169e6426b19cefc110500ca70daee92be247435bf4ad9c81cabf0e00ef17ea7d3537d3e
   languageName: node
   linkType: hard
 
@@ -4403,6 +4440,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"type-fest@npm:^4.33.0":
+  version: 4.35.0
+  resolution: "type-fest@npm:4.35.0"
+  checksum: 10c0/7032a8a940c33d45947a4ff0f74e3aa43b6fd8bb4745b32bba8e61ee47c0dd088cacd102f8377e9e889362e1ae8e0292b64a4c0698c1e42fd297bf6f8899d220
+  languageName: node
+  linkType: hard
+
 "type-is@npm:^1.6.4, type-is@npm:~1.6.18":
   version: 1.6.18
   resolution: "type-is@npm:1.6.18"
@@ -4427,7 +4471,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"typescript-rest@npm:^3.0.4":
+"typescript-rest@npm:3.0.4":
   version: 3.0.4
   resolution: "typescript-rest@npm:3.0.4"
   dependencies:
@@ -4620,7 +4664,8 @@ __metadata:
     "@types/express": "npm:4"
     "@types/node": "npm:22.5.2"
     "@types/swagger-ui-express": "npm:4.1.6"
-    bee-agent-framework: "npm:^0.0.11"
+    bee-agent-framework: "npm:0.0.11"
+    bee-observe-connector: "npm:^0.0.6"
     dotenv: "npm:16.4.5"
     express: "npm:4.19.2"
     globals: "npm:15.9.0"
@@ -4633,7 +4678,7 @@ __metadata:
     tsoa: "npm:6.4.0"
     tsx: "npm:4.19.0"
     typescript: "npm:5.5.4"
-    typescript-rest: "npm:^3.0.4"
+    typescript-rest: "npm:3.0.4"
   languageName: unknown
   linkType: soft
 
