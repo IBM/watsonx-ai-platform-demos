@@ -46,7 +46,7 @@ yarn start
 
 // optional: yarn infra:start-code-interpreter
 
-// optional: 'npm run infra:start --profile=observe' for traceability via Bee Observe and MLFlow
+// optional: 'npm run infra:start --profile=observe' for observability via Bee Observe and MLFlow
 ```
 
 ## REST Endpoints
