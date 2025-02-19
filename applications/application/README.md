@@ -41,6 +41,8 @@ or
 yarn start:appOneLLMTwoAgents
 or
 yarn start
+or
+yarn start:multiAgent (for Bee Agent Framework version >= 0.1.0)
 
 // to udpate swagger: tsoa spec
 
