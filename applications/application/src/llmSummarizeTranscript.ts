@@ -21,26 +21,35 @@ import { UserMessage } from "bee-agent-framework/backend/message";
 import { WatsonxChatModel } from "bee-agent-framework/adapters/watsonx/backend/chat";
 
 export async function generateSummary(transcript:string) {
-    const reader = createConsoleReader();
+    try {    
+        console.log("🚀 Starting Transcript Summary Generation...");
+        let fullResponse = "";
 
-    const llm = new WatsonxChatModel("meta-llama/llama-3-1-70b-instruct")
-    llm.parameters.maxTokens = 1500;
+        const llm = new WatsonxChatModel("meta-llama/llama-3-1-70b-instruct")
+        llm.parameters.maxTokens = 1500;
 
-    const instructionFileLLM = './prompts/instructionLLM.md'
-    const instructionLLM = readFileSync(instructionFileLLM, 'utf-8').split("\\n").join("\n")
-    let prompt = instructionLLM + "\n\n" + transcript
-    console.log("Prompt LLM:")
-    console.log(prompt)
-    
-    return await llm.create({
-        messages: [new UserMessage(prompt)],
-    })
-    .observe((emitter) => {
-        emitter.on("start", () => {
-            reader.write(`LLM 🤖 : `, "starting new iteration");
+        const instructionFileLLM = './prompts/instructionLLM.md'
+        const instructionLLM = readFileSync(instructionFileLLM, 'utf-8').split("\\n").join("\n")
+
+        let prompt = instructionLLM + "\n\n" + transcript
+        console.log("\n\n📜 Transcript:\n")
+        console.log(transcript, "\n\n")
+        
+        return await llm.create({
+            messages: [new UserMessage(prompt)],
+        })
+        .observe((emitter) => {
+            emitter.on("start", () => {
+                console.log(`📝 Transcript Generation Started...`);
+            });
+            emitter.on("error", ({ error }) => {
+                console.error("📝 Transcript Generation Error ❌:", error);
+            });
+            emitter.on("success", async () => {
+                console.info("📝 Transcript Generated ✅");
+            });
         });
-        emitter.on("error", ({ error }) => {
-            reader.write('LLM error', '');
-        });
-    });
+    } catch (error) {
+        console.error("📝 Transcript Generation Failed ❌:", error);
+    }
 }
