@@ -18,15 +18,11 @@ import { WatsonxChatModel } from "bee-agent-framework/adapters/watsonx/backend/c
 import { BeeAgent } from "bee-agent-framework/agents/bee/agent";
 import { UnconstrainedMemory } from "bee-agent-framework/memory/unconstrainedMemory";
 import { RouterUpdateTool } from "./toolRouterUpdate.js";
-import { RunContextCallbacks } from "bee-agent-framework/context";
-import { createConsoleReader } from "./io.js";
 import { FrameworkError, Logger, PromptTemplate } from "bee-agent-framework";
 import { readFileSync } from 'fs';
 import { z } from "zod";
 
 const instructionFile = './prompts/instructionAgentOne.md'
-const reader = createConsoleReader();
-const logger = new Logger({ name: "app", level: "trace" });
 
 let instruction:string = readFileSync(instructionFile, 'utf-8').split("\\n").join("\n")
 const chatLLM = new WatsonxChatModel("meta-llama/llama-3-1-70b-instruct")
@@ -40,8 +36,8 @@ const agent = new BeeAgent({
         user: (template) => 
             template.fork((config) => {
                 config.schema = z.object({ input: z.string()}).passthrough();
-                config.template = instruction + '{(input)}';
-            })
+                config.template = instruction + '{{input}}';
+            }),
     },
     tools: [
         new RouterUpdateTool()
@@ -50,53 +46,40 @@ const agent = new BeeAgent({
 
 export async function runAgentUpdateRouterIfNecessary(transcriptSummary:string) {   
     try {
-        //console.log("Agent UpdateRouterIfNecessary Prompt Addition:")
-        //console.log(transcriptSummary)
+        console.log("🚀 Starting Router Update...");
+        let fullResponse = " ";
 
-        const response = await agent
+        return await agent
             .run(
             { prompt: transcriptSummary },
             {
                 execution: {
-                maxRetriesPerStep: 5,
-                totalMaxRetries: 5,
-                maxIterations: 5,
+                maxRetriesPerStep: 2,
+                totalMaxRetries: 3,
+                maxIterations: 2,
                 },
             },
             )
             .observe((emitter) => {
                 emitter.on("start", () => {
-                    reader.write(`Agent UpdateRouterIfNecessary 🤖 : `, "starting new iteration");
+                    console.log(`🛠️ Processing Router Update...`);
                 });
                 emitter.on("error", ({ error }) => {
-                    reader.write(`Agent UpdateRouterIfNecessary 🤖 : `, FrameworkError.ensure(error).dump());
+                    console.error(`🛠️ Router Update Error ❌:`, FrameworkError.ensure(error).dump());
                 });
                 emitter.on("retry", () => {
-                    reader.write(`Agent UpdateRouterIfNecessary 🤖 : `, "retrying the action...");
+                    console.log(`🛠️ Retrying the Router Update...`);
                 });
-                emitter.on("update", async ({ data, update, meta }) => {
-                    reader.write(`Agent UpdateRouterIfNecessary (${update.key}) 🤖 : `, update.value);
-                });
-                emitter.match("*.*", async (data: any, event) => {
-                    if (event.creator === chatLLM) {
-                        const eventName = event.name as keyof RunContextCallbacks;
-                        switch (eventName) {
-                            case "start":
-                                console.info("Agent UpdateRouterIfNecessary LLM Input");
-                                console.info(data.input);
-                                break;
-                            case "success":
-                                console.info("Agent UpdateRouterIfNecessary LLM Output");
-                                console.info(data.value?.text || data.value);
-                                break;
-                            case "error":
-                                console.error(data);
-                                break;
-                        }
+                emitter.on("update", async ({ update }) => {
+                    if (update.key === "tool_output") {
+                        fullResponse += update.value + " ";
                     }
                 });
-        }); return response;
+                emitter.on("success", async () => {
+                    console.info("🛠️ Router Update Completed ✅:", fullResponse.trim());
+                });
+        });
     } catch (error) {
-        logger.error(FrameworkError.ensure(error).dump());
+        console.error('🛠️ Router Update failed ❌:', FrameworkError.ensure(error).dump());
     } 
 }

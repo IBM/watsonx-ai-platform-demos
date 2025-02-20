@@ -20,39 +20,54 @@ import { createConsoleReader } from "./io.js";
 import { runAgentUpdateRouterIfNecessary } from './agentUpdateRouterIfNecessary.js';
 import { runAgentWriteMailIfNecessary } from './agentWriteMailIfNecessary.js';
 
-const transcriptFile = './prompts/prompt4.md'
+const transcriptFile = './prompts/prompt2.md'
 const reader = createConsoleReader();
+
+console.log("\n🐝✨ Welcome to the Agentic Customer Support Demo built with BeeAI! ✨🐝");
+console.log("\n-------------------------------------------------------------------------\n");
 
 //////////////////////////////////////////////////////////////////
 // Step 1: LLM summarization
 //////////////////////////////////////////////////////////////////
-
+console.log("🔎 Running Transcript Summary Agent...");
 let transcript:string = readFileSync(transcriptFile, 'utf-8').split("\\n").join("\n")
 const llmResponse = await generateSummary(transcript)
-let transcriptSummary = llmResponse.getTextContent()
-reader.write(`Response LLM 🤖 (text) : `, transcriptSummary);
+if (!llmResponse) {
+    console.error("❌ Transcript Summary Generation Failed: No response received.");
+    process.exit(1);
+}
+let transcriptSummary = llmResponse?.getTextContent()
+reader.write(`\n🤖 Transcript Summary : \n`, transcriptSummary);
 
 //////////////////////////////////////////////////////////////////
 // Step 2: Agent One with RouterUpdateTool
 //////////////////////////////////////////////////////////////////
 
+console.log("\n🔎 Running Router Update Agent...");
 const agentOneResponse = await runAgentUpdateRouterIfNecessary(transcriptSummary)
-let agentOneResponseText
+let agentOneResponseText = "";
+
 if (agentOneResponse) {
-    agentOneResponseText = agentOneResponse.result.text
-    reader.write(`Response UpdateRouterIfNecessary 🤖 : `, agentOneResponseText);
+    let agentOneResponseText = agentOneResponse.result.text
+    reader.write(`\n🤖 Router Update: `, agentOneResponseText);
+} else {
+    console.error("🤖 Router Update: Returned no response");
+    process.exit(1);
+}
 
 //////////////////////////////////////////////////////////////////
 // Step 3: One Agent with RouterUpdateTool and WriteMailTool
 //////////////////////////////////////////////////////////////////
 
-    console.log("=================================================================");
-    console.log("=================================================================");
-    const agentTwoResponse = await runAgentWriteMailIfNecessary(agentOneResponseText, transcriptSummary)
-    if (agentTwoResponse) {
-        let agentTwoResponseText = agentTwoResponse.result.text
-        reader.write(`Response WriteMailIfNecessary 🤖 : `, agentTwoResponseText);
-    }
+console.log("\n🔎 Running Email Notification Agent...");
+const agentTwoResponse = await runAgentWriteMailIfNecessary(agentOneResponseText, transcriptSummary)
+
+if (agentTwoResponse) {
+    let agentTwoResponseText = agentTwoResponse.result.text
+    reader.write(`\n🤖 Email Notification: `, agentTwoResponseText);
+} else {
+    console.error("🤖 Email could not be sent: Returned no response");
 }
 
+console.log("\n🎉 All agents have completed their tasks successfully!");
 process.exit(0);

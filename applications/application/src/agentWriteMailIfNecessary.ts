@@ -17,16 +17,12 @@
 import { WatsonxChatModel } from "bee-agent-framework/adapters/watsonx/backend/chat";
 import { BeeAgent } from "bee-agent-framework/agents/bee/agent";
 import { UnconstrainedMemory } from "bee-agent-framework/memory/unconstrainedMemory";
-import { createConsoleReader } from "./io.js";
 import { readFileSync } from 'fs';
-import { FrameworkError, Logger, PromptTemplate } from "bee-agent-framework";
-import { RunContextCallbacks } from "bee-agent-framework/context";
+import { FrameworkError } from "bee-agent-framework";
 import { WriteMailTool } from "./toolWriteMail.js";
 import { z } from "zod";
 
 const instructionFile = './prompts/instructionAgentTwo.md'
-const reader = createConsoleReader();
-const logger = new Logger({ name: "app", level: "trace" });
 
 let instruction:string = readFileSync(instructionFile, 'utf-8').split("\\n").join("\n")
 const chatLLM = new WatsonxChatModel("meta-llama/llama-3-1-70b-instruct")
@@ -37,67 +33,54 @@ const agent = new BeeAgent({
     llm: chatLLM,
     memory: new UnconstrainedMemory(),
     templates: {
-        user: (template) => 
-            template.fork((config) => {
-                config.schema = z.object({ input: z.string()}).passthrough();
-                config.template = instruction + '{(input)}';
-            })
-    },
+            user: (template) => 
+                template.fork((config) => {
+                    config.schema = z.object({ input: z.string()}).passthrough();
+                    config.template = instruction + '{{input}}';
+                }),
+        },
     tools: [
         new WriteMailTool()
     ]
 });
 
 export async function runAgentWriteMailIfNecessary(routerUpdated:string, transcriptSummary:string) {
-    let prompt = routerUpdated + transcriptSummary
     try {
-        console.log("Agent WriteMailIfNecessary Prompt Addition:")
-        console.log(prompt)
+        console.log("🚀 Starting WriteMail...");
+        let fullResponse = "";
+        let prompt = routerUpdated + "\n\n" + transcriptSummary;
 
-        const response = await agent
+        return await agent
             .run(
             { prompt },
             {
                 execution: {
-                maxRetriesPerStep: 5,
-                totalMaxRetries: 5,
-                maxIterations: 5,
+                maxRetriesPerStep: 2,
+                totalMaxRetries: 3,
+                maxIterations: 2,
                 },
             },
             )
             .observe((emitter) => {
                 emitter.on("start", () => {
-                    reader.write(`Agent WriteMailIfNecessary 🤖 : `, "starting new iteration");
+                    console.log(`📩 WriteMail started...`);
                 });
                 emitter.on("error", ({ error }) => {
-                    reader.write(`Agent WriteMailIfNecessary 🤖 : `, FrameworkError.ensure(error).dump());
+                    console.error(`📩 WriteMail Error ❌:`, FrameworkError.ensure(error).dump());
                 });
                 emitter.on("retry", () => {
-                    reader.write(`Agent WriteMailIfNecessary 🤖 : `, "retrying the action...");
+                    console.log(`📩 Retrying WriteMail...`);
                 });
                 emitter.on("update", async ({ data, update, meta }) => {
-                    reader.write(`Agent WriteMailIfNecessary (${update.key}) 🤖 : `, update.value);
-                });
-                emitter.match("*.*", async (data: any, event) => {
-                    if (event.creator === chatLLM) {
-                        const eventName = event.name as keyof RunContextCallbacks;
-                        switch (eventName) {
-                            case "start":
-                                console.info("Agent WriteMailIfNecessary LLM Input");
-                                console.info(data.input);
-                                break;
-                            case "success":
-                                console.info("Agent WriteMailIfNecessary LLM Output");
-                                console.info(data.value?.text || data.value);
-                                break;
-                            case "error":
-                                console.error(data);
-                                break;
-                        }
+                    if (update.key === "tool_output") {
+                        fullResponse += update.value + " ";
                     }
-            });
-        }); return response;
+                });
+                emitter.on("success", async ({ data }) => {
+                    console.info("📩 Email Sent Successfully ✅:", fullResponse.trim());
+                });
+        });
     } catch (error) {
-        logger.error(FrameworkError.ensure(error).dump());
+        console.error("📩 WriteMail Agent Failed ❌:", FrameworkError.ensure(error).dump());
     } 
 }
