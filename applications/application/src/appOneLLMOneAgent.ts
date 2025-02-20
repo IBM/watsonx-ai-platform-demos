@@ -21,14 +21,11 @@ import { createConsoleReader } from "./io.js";
 import { FrameworkError } from "bee-agent-framework/errors";
 import { Logger } from "bee-agent-framework/logger/logger";
 import { UnconstrainedMemory } from "bee-agent-framework/memory/unconstrainedMemory";
-import { WatsonXChatLLM } from "bee-agent-framework/adapters/watsonx/chat";
-import { GenerateCallbacks } from "bee-agent-framework/llms/base";
+import { WatsonxChatModel } from "bee-agent-framework/adapters/watsonx/backend/chat";
 import { RouterUpdateTool } from './toolRouterUpdate.js';
-import { WatsonXChatLLMPresetModel } from 'bee-agent-framework/adapters/watsonx/chatPreset';
 import { WriteMailTool } from './toolWriteMail.js';
 import { generateSummary } from './llmSummarizeTranscript.js';
-import { PromptTemplate } from 'bee-agent-framework';
-import { BeeAgentTemplates } from 'bee-agent-framework/agents/bee/types';
+import { z } from "zod";
 
 const instructionFileLLM = './prompts/instructionLLM.md'
 const instructionFileAgent = './prompts/instructionOneAgent.md'
@@ -38,7 +35,6 @@ const logger = new Logger({ name: "app", level: "trace" });
 const instructionLLM = readFileSync(instructionFileLLM, 'utf-8').split("\\n").join("\n")
 let promptInput:string = readFileSync(transcriptFile, 'utf-8').split("\\n").join("\n")
 let prompt:string = instructionLLM + "\n\n" + promptInput
-const WATSONX_MODEL = process.env.WATSONX_MODEL as WatsonXChatLLMPresetModel
 console.log("Transcript:")
 console.log(prompt)
 
@@ -55,24 +51,22 @@ reader.write(`LLM 🤖 (text) : `, llmStep1Response);
 // Step 2 and 3: One Agent with RouterUpdateTool and WriteMailTool
 //////////////////////////////////////////////////////////////////
 
-const chatLLM = WatsonXChatLLM.fromPreset(WATSONX_MODEL, {
-  apiKey: process.env.WATSONX_API_KEY,
-  projectId: process.env.WATSONX_PROJECT_ID,
-  baseUrl: process.env.WATSONX_BASE_URL
-})
+const chatLLM = new WatsonxChatModel("meta-llama/llama-3-1-70b-instruct")
+
 const agent = new BeeAgent({
-  llm: chatLLM,
-  memory: new UnconstrainedMemory(),
-  tools: [
-    new RouterUpdateTool(),
-    new WriteMailTool()
-  ],
-  templates: {
-    user: new PromptTemplate({
-        variables: ["input"],
-        template: `{{input}}`,
-    }),
-  } as BeeAgentTemplates,
+    llm: chatLLM,
+    memory: new UnconstrainedMemory(),
+    templates: {
+        user: (template) => 
+            template.fork((config) => {
+                config.schema = z.object({ input: z.string()}).passthrough();
+                config.template = '{(input)}';
+            })
+    },
+    tools: [
+        new WriteMailTool(),
+        new RouterUpdateTool()
+    ]
 });
 
 const instructionOneAgent = readFileSync(instructionFileAgent, 'utf-8').split("\\n").join("\n")
@@ -107,7 +101,7 @@ try {
       });
       emitter.match("*.*", async (data: any, event) => {
         if (event.creator === chatLLM) {
-          const eventName = event.name as keyof GenerateCallbacks;
+          const eventName = event.name;
           switch (eventName) {
             case "start":
               console.info("LLM Input");
