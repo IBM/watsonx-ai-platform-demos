@@ -70,11 +70,11 @@ export async function runAgentUpdateRouterIfNecessary(transcriptSummary:string) 
                 emitter.on("retry", () => {
                     console.log(`🛠️ Retrying the Router Update...`);
                 });
-                emitter.on("update", async ({ update }) => {
-                    if (update.key === "tool_output") {
-                        fullResponse += update.value + " ";
-                    }
-                });
+                // emitter.on("update", async ({ update }) => {
+                //     if (update.key === "tool_output") {
+                //         fullResponse += update.value + " ";
+                //     }
+                // });
                 emitter.on("success", async () => {
                     console.info("🛠️ Router Update Completed ✅:", fullResponse.trim());
                 });

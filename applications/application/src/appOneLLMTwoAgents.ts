@@ -20,7 +20,7 @@ import { createConsoleReader } from "./io.js";
 import { runAgentUpdateRouterIfNecessary } from './agentUpdateRouterIfNecessary.js';
 import { runAgentWriteMailIfNecessary } from './agentWriteMailIfNecessary.js';
 
-const transcriptFile = './prompts/prompt2.md'
+const transcriptFile = './prompts/prompt4.md'
 const reader = createConsoleReader();
 
 console.log("\n🐝✨ Welcome to the Agentic Customer Support Demo built with BeeAI! ✨🐝");

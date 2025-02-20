@@ -71,11 +71,11 @@ export async function runAgentWriteMailIfNecessary(routerUpdated:string, transcr
                 emitter.on("retry", () => {
                     console.log(`📩 Retrying WriteMail...`);
                 });
-                emitter.on("update", async ({ data, update, meta }) => {
-                    if (update.key === "tool_output") {
-                        fullResponse += update.value + " ";
-                    }
-                });
+                // emitter.on("update", async ({ data, update, meta }) => {
+                //     if (update.key === "tool_output") {
+                //         fullResponse += update.value + " ";
+                //     }
+                // });
                 emitter.on("success", async ({ data }) => {
                     console.info("📩 Email Sent Successfully ✅:", fullResponse.trim());
                 });
