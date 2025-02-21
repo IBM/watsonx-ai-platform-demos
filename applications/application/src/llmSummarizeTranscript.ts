@@ -17,14 +17,23 @@
 import { readFileSync } from 'fs';
 import "dotenv/config.js";
 import { createConsoleReader } from "./io.js";
-import { UserMessage } from "bee-agent-framework/backend/message";
-import { WatsonxChatModel } from "bee-agent-framework/adapters/watsonx/backend/chat";
+import { WatsonXLLM } from "bee-agent-framework/adapters/watsonx/llm";
+import { WatsonXChatLLMPresetModel } from 'bee-agent-framework/adapters/watsonx/chatPreset';
 
 export async function generateSummary(transcript:string) {
     const reader = createConsoleReader();
 
-    const llm = new WatsonxChatModel("meta-llama/llama-3-1-70b-instruct")
-    llm.parameters.maxTokens = 1500;
+    const WATSONX_MODEL = process.env.WATSONX_MODEL as WatsonXChatLLMPresetModel
+    const llm = new WatsonXLLM({
+        modelId: WATSONX_MODEL,
+        projectId: process.env.WATSONX_PROJECT_ID,
+        baseUrl: process.env.WATSONX_BASE_URL,
+        apiKey: process.env.WATSONX_API_KEY,
+        parameters: {
+            decoding_method: "greedy",
+            max_new_tokens: 1500,
+        }
+    });
 
     const instructionFileLLM = './prompts/instructionLLM.md'
     const instructionLLM = readFileSync(instructionFileLLM, 'utf-8').split("\\n").join("\n")
@@ -32,10 +41,7 @@ export async function generateSummary(transcript:string) {
     console.log("Prompt LLM:")
     console.log(prompt)
     
-    return await llm.create({
-        messages: [new UserMessage(prompt)],
-    })
-    .observe((emitter) => {
+    return await llm.generate(prompt).observe((emitter) => {
         emitter.on("start", () => {
             reader.write(`LLM 🤖 : `, "starting new iteration");
         });

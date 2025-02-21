@@ -17,17 +17,19 @@
 import { readFileSync } from 'fs';
 import "dotenv/config.js";
 import { createConsoleReader } from "./io.js";
-import { UserMessage } from "bee-agent-framework/backend/message";
-import { OllamaChatModel } from "bee-agent-framework/adapters/ollama/backend/chat";
+import { OllamaLLM } from 'bee-agent-framework/adapters/ollama/llm';
 
 export async function generateSummary(transcript:string) {
     const reader = createConsoleReader();
 
-    
-    const llm = new OllamaChatModel("llama3.1")
-    llm.parameters.temperature = 0.0;
-    llm.parameters.maxTokens = 400;
-    llm.parameters.stopSequences = ["<|endoftext|>"];
+    const llm = new OllamaLLM({
+        modelId: "transcript-summary",
+        parameters: {
+            temperature: 0.0,
+            num_predict: 400,
+            stop: ["<|endoftext|>"]
+        }
+    });
     
     const instructionFileLLM = './prompts/instructionLLMLocal.md'
     const instructionLLM = readFileSync(instructionFileLLM, 'utf-8').split("\\n").join("\n")
@@ -35,12 +37,7 @@ export async function generateSummary(transcript:string) {
     console.log("Prompt LLM:")
     console.log(prompt)
     
-    return await llm.create
-    ({
-        messages: [new UserMessage(prompt)],
-    })
-    
-    .observe((emitter) => {
+    return await llm.generate(prompt).observe((emitter) => {
         emitter.on("start", () => {
             reader.write(`LLM 🤖 : `, "starting new iteration");
         });

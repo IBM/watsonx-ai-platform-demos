@@ -15,8 +15,7 @@
  */
 
 import { z } from "zod";
-import { Tool, ToolInput, BaseToolOptions, BaseToolRunOptions, ToolOutput, ToolEmitter } from "bee-agent-framework/tools/base";
-import { Emitter } from "bee-agent-framework/emitter/emitter";
+import { Tool, ToolInput, BaseToolOptions, BaseToolRunOptions, ToolOutput } from "bee-agent-framework/tools/base";
 
 export interface WriteMailToolOptions extends BaseToolOptions {}
 
@@ -61,11 +60,6 @@ export class WriteMailTool extends Tool<
     //"Writes an email to the subscriber if the router could be updated successfully remotely"; 
     // Not strong enough. Invokes Write Mail tool before Router Update tool.
 
-  public readonly emitter: ToolEmitter<ToolInput<this>, WriteMailToolOutput> = Emitter.root.child({
-    namespace: ["tool", "writeMail"],
-    creator: this,
-  });
-  
   inputSchema() {
     return z.object({
       phoneNumber: z
