@@ -12,7 +12,6 @@
     "start:appOneLLMOneAgent": "tsx src/appOneLLMOneAgent.ts",
     "start:appOneLLMTwoAgents": "tsx src/appOneLLMTwoAgents.ts",
     "start:appOneLocalLLMTwoAgents": "tsx src/appOneLocalLLMTwoAgents.ts",
-    "start:multiAgent": "tsx src/multiAgent.ts",
     "infra:start-code-interpreter": "yarn _docker compose up bee-code-interpreter",
     "infra:stop-all": "yarn _docker compose down",
     "infra:clean-all": "yarn _docker compose down --volumes",
@@ -34,9 +33,8 @@
     "typescript": "5.5.4"
   },
   "dependencies": {
-    "@ibm-cloud/watsonx-ai": "^1.5.0",
     "@ibm-generative-ai/node-sdk": "3.2.3",
-    "bee-agent-framework": "0.1.1",
+    "bee-agent-framework": "0.0.11",
     "dotenv": "16.4.5",
     "express": "4.19.2",
     "ollama": "0.5.8",
