@@ -18,3 +18,4 @@ instructlab/watsonx-openai-api
 orchestrate/custom-search/venv
 __pycache__/
 applications/application/output.txt
+applications/application/src/multiAgent.ts

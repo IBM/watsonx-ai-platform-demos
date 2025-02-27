@@ -1,5 +1,5 @@
 /**
- * Copyright 2024 IBM Corp.
+ * Copyright 2025 IBM Corp.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -17,12 +17,15 @@
 import { WatsonxChatModel } from "bee-agent-framework/adapters/watsonx/backend/chat";
 import { BeeAgent } from "bee-agent-framework/agents/bee/agent";
 import { UnconstrainedMemory } from "bee-agent-framework/memory/unconstrainedMemory";
+import { createConsoleReader } from "./io.js";
 import { readFileSync } from 'fs';
-import { FrameworkError } from "bee-agent-framework";
+import { FrameworkError, Logger } from "bee-agent-framework";
 import { WriteMailTool } from "./toolWriteMail.js";
 import { z } from "zod";
 
 const instructionFile = './prompts/instructionAgentTwo.md'
+const reader = createConsoleReader();
+const logger = new Logger({ name: "app", level: "trace" });
 
 let instruction:string = readFileSync(instructionFile, 'utf-8').split("\\n").join("\n")
 const chatLLM = new WatsonxChatModel("meta-llama/llama-3-1-70b-instruct")
@@ -62,25 +65,34 @@ export async function runAgentWriteMailIfNecessary(routerUpdated:string, transcr
             },
             )
             .observe((emitter) => {
-                emitter.on("start", () => {
-                    console.log(`📩 WriteMail started...`);
+                emitter.on("start", async (data: any) => {
+                    reader.write(`Agent WriteMailIfNecessary 🤖 : `, "starting new iteration");
+                    reader.write("Agent WriteMailIfNecessary LLM Input", data);
                 });
                 emitter.on("error", ({ error }) => {
-                    console.error(`📩 WriteMail Error ❌:`, FrameworkError.ensure(error).dump());
+                    reader.write(`Agent WriteMailIfNecessary 🤖 : `, FrameworkError.ensure(error).dump());
                 });
                 emitter.on("retry", () => {
-                    console.log(`📩 Retrying WriteMail...`);
+                    reader.write(`Agent WriteMailIfNecessary 🤖 : `, "retrying the action...");
                 });
-                // emitter.on("update", async ({ data, update, meta }) => {
-                //     if (update.key === "tool_output") {
-                //         fullResponse += update.value + " ";
-                //     }
-                // });
-                emitter.on("success", async ({ data }) => {
-                    console.info("📩 Email Sent Successfully ✅:", fullResponse.trim());
+                
+                emitter.on("update", async ({ update }) => {
+                    if (update.key === "thought" || update.key === "tool_name" || 
+                        update.key === "tool_input" || update.key === "final_answer") {
+                        reader.write(`Agent WriteMailIfNecessary (${update.key}) 🤖 : `, update.value);
+                        
+                        if (update.key === "final_answer") {
+                            fullResponse = update.value;
+                        }
+                    }
                 });
-        });
+                emitter.on("success", async (data: any) => {
+                    if (fullResponse) {
+                        reader.write("Agent WriteMailIfNecessary LLM Output", data);
+                    }
+                });
+            });
     } catch (error) {
-        console.error("📩 WriteMail Agent Failed ❌:", FrameworkError.ensure(error).dump());
+        logger.error(FrameworkError.ensure(error).dump());
     } 
 }

@@ -1,5 +1,5 @@
 /**
- * Copyright 2024 IBM Corp.
+ * Copyright 2025 IBM Corp.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -46,7 +46,6 @@ reader.write(`\n🤖 Transcript Summary : \n`, transcriptSummary);
 console.log("\n🔎 Running Router Update Agent...");
 const agentOneResponse = await runAgentUpdateRouterIfNecessary(transcriptSummary)
 let agentOneResponseText = "";
-
 if (agentOneResponse) {
     let agentOneResponseText = agentOneResponse.result.text
     reader.write(`\n🤖 Router Update: `, agentOneResponseText);
@@ -61,12 +60,13 @@ if (agentOneResponse) {
 
 console.log("\n🔎 Running Email Notification Agent...");
 const agentTwoResponse = await runAgentWriteMailIfNecessary(agentOneResponseText, transcriptSummary)
-
+let agentTwoResponseText = "";
 if (agentTwoResponse) {
     let agentTwoResponseText = agentTwoResponse.result.text
     reader.write(`\n🤖 Email Notification: `, agentTwoResponseText);
 } else {
     console.error("🤖 Email could not be sent: Returned no response");
+    process.exit(1);
 }
 
 console.log("\n🎉 All agents have completed their tasks successfully!");
