@@ -15,8 +15,11 @@
  */
 
 import { z } from "zod";
-import { Tool, ToolInput, ToolEmitter, ToolOutput } from "bee-agent-framework/tools/base";
-import { Emitter } from "bee-agent-framework/emitter/emitter";
+import { Tool, ToolInput, BaseToolOptions, BaseToolRunOptions, ToolOutput } from "bee-agent-framework/tools/base";
+
+export interface RouterUpdateToolOptions extends BaseToolOptions {}
+
+export interface RouterUpdateToolRunOptions extends BaseToolRunOptions {}
 
 export interface RouterUpdateResult {
   success: string;
@@ -47,15 +50,13 @@ export class RouterUpdateToolOutput extends ToolOutput{
 }
 
 export class RouterUpdateTool extends Tool<
-  RouterUpdateToolOutput> {
+  RouterUpdateToolOutput,
+  RouterUpdateToolOptions,
+  RouterUpdateToolRunOptions
+> {
   name = "RouterUpdate"; // no spaces
   description =
     "Updates the software of routers remotely for a subscriber with a certain phone number.";
-
-  public readonly emitter: ToolEmitter<ToolInput<this>, RouterUpdateToolOutput> = Emitter.root.child({
-    namespace: ["tool", "routerUpdate"],
-    creator: this,
-  })
 
   inputSchema() {
     return z.object({
@@ -66,26 +67,24 @@ export class RouterUpdateTool extends Tool<
     });
   }
 
+  public constructor(public readonly config: RouterUpdateToolOptions = {}) {
+    super(config);
+  }
+
   static {
     this.register();
   }
 
-  protected async _run(input: ToolInput<this>): Promise<RouterUpdateToolOutput> {
-    const { phoneNumber } = input;
-    console.log("Input to Router Update tool - phoneNumber: " + phoneNumber);
+  protected async _run({ phoneNumber: phoneNumber }: ToolInput<RouterUpdateTool>,
+    _options?: RouterUpdateToolRunOptions): Promise<RouterUpdateToolOutput> {
+    
+    console.log("Input to Router Update tool - phoneNumber: " + phoneNumber)
 
-    // Optionally, you can emit a start event if needed:
-    // this.emitter.emit("start", { toolName: this.name });
-
-    // Simulate your router update process
-    const results: RouterUpdateResult = {
+    // real implementation goes here
+    let results:RouterUpdateResult = {
       success: "true",
-      text: "Router has been updated",
-    };
-
-    // Optionally, emit an update event for final results:
-    // this.emitter.emit("update", { key: "final_answer", value: JSON.stringify(results) });
-
+      text: "Router has been updated" // some descriptive text is required to support the LLM to understand the result
+    }
     return new RouterUpdateToolOutput(results);
   }
 }
