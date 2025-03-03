@@ -70,4 +70,9 @@ if (agentTwoResponse) {
 }
 
 console.log("\n🎉 All agents have completed their tasks successfully!");
+if (process.env.BEE_FRAMEWORK_INSTRUMENTATION_ENABLED === 'true') {
+    console.log("Waiting for traces to be exported (5 seconds)...");
+    await new Promise(resolve => setTimeout(resolve, 5000));
+    console.log("Traces exported to Jaeger UI at http://localhost:16686");
+}
 process.exit(0);
