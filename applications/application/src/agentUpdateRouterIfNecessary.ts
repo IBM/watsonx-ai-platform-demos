@@ -1,5 +1,5 @@
 /**
- * Copyright 2024 IBM Corp.
+ * Copyright 2025 IBM Corp.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,41 +14,34 @@
  * limitations under the License.
  */
 
-import { WatsonXChatLLM } from "bee-agent-framework/adapters/watsonx/chat";
+import { WatsonxChatModel } from "bee-agent-framework/adapters/watsonx/backend/chat";
 import { BeeAgent } from "bee-agent-framework/agents/bee/agent";
 import { UnconstrainedMemory } from "bee-agent-framework/memory/unconstrainedMemory";
 import { RouterUpdateTool } from "./toolRouterUpdate.js";
-import { WatsonXChatLLMPresetModel } from "bee-agent-framework/adapters/watsonx/chatPreset";
 import { createConsoleReader } from "./io.js";
-import { FrameworkError, Logger, PromptTemplate } from "bee-agent-framework";
-import { GenerateCallbacks } from "bee-agent-framework/llms/base";
-import { BeeAgentTemplates } from "bee-agent-framework/agents/bee/types";
+import { FrameworkError, Logger } from "bee-agent-framework";
 import { readFileSync } from 'fs';
+import { z } from "zod";
 
 const instructionFile = './prompts/instructionAgentOne.md'
 const reader = createConsoleReader();
 const logger = new Logger({ name: "app", level: "trace" });
 
+
 let instruction:string = readFileSync(instructionFile, 'utf-8').split("\\n").join("\n")
-const WATSONX_MODEL = process.env.WATSONX_MODEL as WatsonXChatLLMPresetModel
-const chatLLM = WatsonXChatLLM.fromPreset(WATSONX_MODEL, {
-    apiKey: process.env.WATSONX_API_KEY,
-    projectId: process.env.WATSONX_PROJECT_ID,
-    baseUrl: process.env.WATSONX_BASE_URL,
-    parameters: (defaultParameters) => ({
-        ...defaultParameters,
-        decoding_method: "greedy",
-        max_new_tokens: 1500,
-    })
-})
+const chatLLM = new WatsonxChatModel("meta-llama/llama-3-1-70b-instruct")
+chatLLM.parameters.maxTokens = 1500;
+chatLLM.parameters.temperature = 0.5;
+
 const agent = new BeeAgent({
     llm: chatLLM,
     memory: new UnconstrainedMemory(),
     templates: {
-        user: new PromptTemplate({
-            variables: ["input"],
-            template: instruction + `{{input}}`,
-        }),
+        user: (template) => 
+            template.fork((config) => {
+                config.schema = z.object({ input: z.string()}).passthrough();
+                config.template = instruction + '{{input}}';
+            }),
     },
     tools: [
         new RouterUpdateTool()
@@ -57,53 +50,53 @@ const agent = new BeeAgent({
 
 export async function runAgentUpdateRouterIfNecessary(transcriptSummary:string) {   
     try {
-        //console.log("Agent UpdateRouterIfNecessary Prompt Addition:")
-        //console.log(transcriptSummary)
+        console.log("🚀 Starting Router Update...");
+        let fullResponse = "";
 
         return await agent
             .run(
             { prompt: transcriptSummary },
             {
                 execution: {
-                maxRetriesPerStep: 5,
-                totalMaxRetries: 5,
-                maxIterations: 5,
+                maxRetriesPerStep: 2,
+                totalMaxRetries: 3,
+                maxIterations: 2,
                 },
             },
             )
             .observe((emitter) => {
-                emitter.on("start", () => {
+                emitter.on("start", async (data: any) => {
                     reader.write(`Agent UpdateRouterIfNecessary 🤖 : `, "starting new iteration");
+                    reader.write("Agent UpdateRouterIfNecessary LLM Input", data);
                 });
+                
                 emitter.on("error", ({ error }) => {
-                    reader.write(`Agent UpdateRouterIfNecessary 🤖 : `, FrameworkError.ensure(error).dump());
+                    reader.write(`🛠️ Router Update Error ❌:`, FrameworkError.ensure(error).dump());
                 });
+                
                 emitter.on("retry", () => {
-                    reader.write(`Agent UpdateRouterIfNecessary 🤖 : `, "retrying the action...");
+                    console.log(`🛠️ Retrying the Router Update...`);
                 });
-                emitter.on("update", async ({ data, update, meta }) => {
-                    reader.write(`Agent UpdateRouterIfNecessary (${update.key}) 🤖 : `, update.value);
-                });
-                emitter.match("*.*", async (data: any, event) => {
-                    if (event.creator === chatLLM) {
-                        const eventName = event.name as keyof GenerateCallbacks;
-                        switch (eventName) {
-                            case "start":
-                                console.info("Agent UpdateRouterIfNecessary LLM Input");
-                                console.info(data.input);
-                                break;
-                            case "success":
-                                console.info("Agent UpdateRouterIfNecessary LLM Output");
-                                console.info(data.value.raw.finalResult);
-                                break;
-                            case "error":
-                                console.error(data);
-                                break;
+                
+                emitter.on("update", async ({ update }) => {
+                    if (update.key === "thought" || update.key === "tool_name" || 
+                        update.key === "tool_input" || update.key === "tool_output" || 
+                        update.key === "final_answer") {
+                        reader.write(`Agent UpdateRouterIfNecessary (${update.key}) 🤖 : `, update.value);
+                        
+                        if (update.key === "final_answer") {
+                            fullResponse = update.value;
                         }
                     }
+                });
+                emitter.on("success", async (data: any) => {
+                    if (fullResponse) {
+                        reader.write("Agent UpdateRouterIfNecessary LLM Output", data);
+                    }
+                });
             });
-        });
     } catch (error) {
         logger.error(FrameworkError.ensure(error).dump());
+        return null;
     } 
 }

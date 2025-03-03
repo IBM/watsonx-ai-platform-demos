@@ -1,5 +1,5 @@
 /**
- * Copyright 2024 IBM Corp.
+ * Copyright 2025 IBM Corp.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -17,36 +17,43 @@
 import { readFileSync } from 'fs';
 import "dotenv/config.js";
 import { createConsoleReader } from "./io.js";
-import { WatsonXLLM } from "bee-agent-framework/adapters/watsonx/llm";
-import { WatsonXChatLLMPresetModel } from 'bee-agent-framework/adapters/watsonx/chatPreset';
+import { UserMessage } from "bee-agent-framework/backend/message";
+import { WatsonxChatModel } from "bee-agent-framework/adapters/watsonx/backend/chat";
 
 export async function generateSummary(transcript:string) {
     const reader = createConsoleReader();
 
-    const WATSONX_MODEL = process.env.WATSONX_MODEL as WatsonXChatLLMPresetModel
-    const llm = new WatsonXLLM({
-        modelId: WATSONX_MODEL,
-        projectId: process.env.WATSONX_PROJECT_ID,
-        baseUrl: process.env.WATSONX_BASE_URL,
-        apiKey: process.env.WATSONX_API_KEY,
-        parameters: {
-            decoding_method: "greedy",
-            max_new_tokens: 1500,
-        }
-    });
+    try {    
+        console.log("🚀 Starting Transcript Summary Generation...");
 
-    const instructionFileLLM = './prompts/instructionLLM.md'
-    const instructionLLM = readFileSync(instructionFileLLM, 'utf-8').split("\\n").join("\n")
-    let prompt = instructionLLM + "\n\n" + transcript
-    console.log("Prompt LLM:")
-    console.log(prompt)
-    
-    return await llm.generate(prompt).observe((emitter) => {
-        emitter.on("start", () => {
-            reader.write(`LLM 🤖 : `, "starting new iteration");
+        const llm = new WatsonxChatModel("meta-llama/llama-3-1-70b-instruct")
+        llm.parameters.maxTokens = 1500;
+
+        const instructionFileLLM = './prompts/instructionLLM.md'
+        const instructionLLM = readFileSync(instructionFileLLM, 'utf-8').split("\\n").join("\n")
+
+        let prompt = instructionLLM + "\n\n" + transcript
+        console.log("\n\n📜 Prompt LLM:\n")
+        console.log(prompt, "\n\n")
+        
+        return await llm.create({
+            messages: [new UserMessage(prompt)],
+            stream: false
+        })
+        .observe((emitter) => {
+            emitter.on("start", async (data: any) => {
+                reader.write(`LLM 🤖 : `, "starting new iteration");
+                reader.write(`LLM Input 🤖 : `, data);
+            });
+            emitter.on("error", ({ error }) => {
+                reader.write(`LLM 🤖 : `, "");
+            });
+            emitter.on("success", async (data: any) => {
+                reader.write(`LLM 🤖 : `, "success");
+                reader.write(`LLM Output 🤖 : `, data);
+            });
         });
-        emitter.on("error", ({ error }) => {
-            reader.write('LLM error', '');
-        });
-    });
+    } catch (error) {
+        console.error("📝 Transcript Generation Failed ❌:", error);
+    }
 }

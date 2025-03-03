@@ -47,6 +47,13 @@ yarn start
 // optional: yarn infra:start-code-interpreter
 ```
 
+# Running appOneLLMTwoAgents with tracing via OpenTelemetry and Jaeger:
+
+```bash
+yarn infra:start-jaeger
+yarn start:appOneLLMTwoAgents:jaeger
+```
+
 ## REST Endpoints
 
 See [Endpoints.md](Endpoints.md#ollama-summary).

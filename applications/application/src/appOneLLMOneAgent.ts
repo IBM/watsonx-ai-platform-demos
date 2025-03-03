@@ -48,7 +48,11 @@ console.log(prompt)
 
 let transcript:string = readFileSync(transcriptFile, 'utf-8').split("\\n").join("\n")
 const llmResponse = await generateSummary(transcript)
-let llmStep1Response = llmResponse.getTextContent()
+if (!llmResponse) {
+  console.error("❌ Transcript Summary Generation Failed: No response received.");
+  process.exit(1);
+}
+let llmStep1Response = llmResponse?.getTextContent()
 reader.write(`LLM 🤖 (text) : `, llmStep1Response);
 
 //////////////////////////////////////////////////////////////////

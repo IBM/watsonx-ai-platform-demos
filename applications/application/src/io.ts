@@ -1,5 +1,5 @@
 /**
- * Copyright 2024 IBM Corp.
+ * Copyright 2025 IBM Corp.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,18 +14,38 @@
  * limitations under the License.
  */
 
-// From: https://github.com/i-am-bee/bee-agent-framework/blob/e117284496d215e242254473b1ef8d9539d1d532/examples/helpers/io.ts
+// Reference: https://github.com/i-am-bee/bee-agent-framework/blob/e117284496d215e242254473b1ef8d9539d1d532/examples/helpers/io.ts
 
 import readline from "node:readline/promises";
 import { stdin, stdout } from "node:process";
 import picocolors from "picocolors";
 import * as R from "remeda";
 import stripAnsi from "strip-ansi";
+import { inspect } from "util";
 
 interface ReadFromConsoleInput {
   fallback?: string;
   input?: string;
   allowEmpty?: boolean;
+}
+
+function omitUnwanted(obj: any, seen = new WeakSet()): any {
+  if (obj === null || typeof obj !== "object") {
+    return obj;
+  }
+  if (seen.has(obj)) {
+    return obj;
+  }
+  seen.add(obj);
+  if (Array.isArray(obj)) {
+    return obj.map(item => omitUnwanted(item, seen));
+  }
+  const result: any = {};
+  for (const key in obj) {
+    if (key === "raw" || key === "handlers" || key === "emitter") continue;
+    result[key] = omitUnwanted(obj[key], seen);
+  }
+  return result;
 }
 
 export function createConsoleReader({
@@ -37,7 +57,41 @@ export function createConsoleReader({
   let isActive = true;
 
   return {
-    write(role: string, data: string) {
+    write(role: string, data: any) {
+      if (typeof data === "string") {
+        rl.write(
+          [
+            role && R.piped(picocolors.red, picocolors.bold)(role),
+            picocolors.red(stripAnsi(data ?? ""))
+          ]
+            .filter(Boolean)
+            .join(" ")
+            .concat("\n"),
+        );
+        return;
+      }
+      
+      if (data && typeof data === "object") {
+        const cleanedData = omitUnwanted(data);
+        const output = inspect(cleanedData, {
+          depth: null,
+          maxArrayLength: null,
+          maxStringLength: null,
+          colors: true,
+          compact: false,
+        });
+        rl.write(
+          [
+            role && R.piped(picocolors.red, picocolors.bold)(role),
+            output
+          ]
+            .filter(Boolean)
+            .join(" ")
+            .concat("\n"),
+        );
+        return;
+      }
+      
       rl.write(
         [role && R.piped(picocolors.red, picocolors.bold)(role), stripAnsi(data ?? "")]
           .filter(Boolean)
