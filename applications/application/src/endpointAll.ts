@@ -46,7 +46,11 @@ export default class EndpointAllController {
 //////////////////////////////////////////////////////////////////
 
     const llmResponse = await generateSummary(transcript)
-    let transcriptSummary = llmResponse.getTextContent()
+    if (!llmResponse) {
+      console.error("❌ Transcript Summary Generation Failed: No response received.");
+      process.exit(1);
+    }
+    let transcriptSummary = llmResponse?.getTextContent()
 
 //////////////////////////////////////////////////////////////////
 // Step 2: Agent One with RouterUpdateTool

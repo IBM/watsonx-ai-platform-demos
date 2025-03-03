@@ -55,6 +55,17 @@ services:
       - k3s-containerd:/var/lib/rancher/k3s/agent/containerd
       - k3s-kubeconfig:/output
 
+  jaeger:
+    image: "jaegertracing/jaeger:2.3.0"
+    ports:
+      - "16686:16686"
+      - "4317:4317"   
+      - "4318:4318"    
+      - "5778:5778"    
+      - "9411:9411"   
+    environment:
+      - COLLECTOR_ZIPKIN_HOST_PORT=9411
+
 volumes:
   k3s-kubeconfig:
   k3s-containerd:
