@@ -15,7 +15,8 @@
  */
 
 import { z } from "zod";
-import { Tool, ToolInput, BaseToolOptions, BaseToolRunOptions, ToolOutput } from "bee-agent-framework/tools/base";
+import { Tool, ToolInput, BaseToolOptions, BaseToolRunOptions, ToolOutput, ToolEmitter } from "bee-agent-framework/tools/base";
+import { Emitter } from "bee-agent-framework/emitter/emitter";
 
 export interface RouterUpdateToolOptions extends BaseToolOptions {}
 
@@ -36,10 +37,15 @@ export class RouterUpdateToolOutput extends ToolOutput{
     return false;
   }
   createSnapshot(): unknown {
-    throw new Error("Method not implemented.");
+    return {
+      finalResult: this.finalResult
+    }
   }
   loadSnapshot(snapshot: unknown): void {
-    throw new Error("Method not implemented.");
+    const typedSnapshot = snapshot as { finalResult: string };
+    if (typedSnapshot && typeof typedSnapshot.finalResult === 'string') {
+      this.finalResult = typedSnapshot.finalResult;
+    }
   }
   static {
     this.register();
@@ -87,4 +93,5 @@ export class RouterUpdateTool extends Tool<
     }
     return new RouterUpdateToolOutput(results);
   }
+  readonly emitter: ToolEmitter<ToolInput<RouterUpdateTool>, RouterUpdateToolOutput> = new Emitter();
 }

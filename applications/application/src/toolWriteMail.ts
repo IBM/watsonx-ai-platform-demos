@@ -15,7 +15,8 @@
  */
 
 import { z } from "zod";
-import { Tool, ToolInput, BaseToolOptions, BaseToolRunOptions, ToolOutput } from "bee-agent-framework/tools/base";
+import { Tool, ToolInput, BaseToolOptions, BaseToolRunOptions, ToolOutput, ToolEmitter } from "bee-agent-framework/tools/base";
+import { Emitter } from "bee-agent-framework/emitter/emitter";
 
 export interface WriteMailToolOptions extends BaseToolOptions {}
 
@@ -36,10 +37,15 @@ export class WriteMailToolOutput extends ToolOutput{
     return false;
   }
   createSnapshot(): unknown {
-    throw new Error("Method not implemented.");
+    return {
+      finalResult: this.finalResult
+    }
   }
   loadSnapshot(snapshot: unknown): void {
-    throw new Error("Method not implemented.");
+    const typedSnapshot = snapshot as { finalResult: string };
+    if (typedSnapshot && typeof typedSnapshot.finalResult === 'string') {
+      this.finalResult = typedSnapshot.finalResult;
+    }
   }
   static {
     this.register();
@@ -94,4 +100,5 @@ export class WriteMailTool extends Tool<
     }
     return new WriteMailToolOutput(results);
   }
+  readonly emitter: ToolEmitter<ToolInput<WriteMailTool>, WriteMailToolOutput> = new Emitter();
 }
