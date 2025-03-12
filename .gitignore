@@ -17,3 +17,6 @@ instructlab/watsonx-openapi
 instructlab/watsonx-openai-api
 orchestrate/custom-search/venv
 __pycache__/
+
+# Additional
+orchestrate/custom-search/ce-deployment
