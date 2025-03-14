@@ -20,3 +20,11 @@ __pycache__/
 
 # Additional
 orchestrate/custom-search/ce-deployment
+workshops/regional_techXchange-march25/03_phase3_agents/agents/langgraph_implementation/.venv
+workshops/regional_techXchange-march25/03_phase3_agents/ui/code/.streamlit
+workshops/regional_techXchange-march25/03_phase3_agents/agents/langgraph_implementation/poetry.lock
+workshops/regional_techXchange-march25/03_phase3_agents/agents/langgraph_implementation/.pytest_cache
+workshops/regional_techXchange-march25/03_phase3_agents/agents/langgraph_implementation/prompts
+workshops/regional_techXchange-march25/03_phase3_agents/agents/langgraph_implementation/config.toml
+workshops/regional_techXchange-march25/03_phase3_agents/agents/langgraph_implementation/watsonx-ochestrate_integration
+workshops/regional_techXchange-march25/03_phase3_agents/agents/langgraph_implementation/.venv
