@@ -15,6 +15,7 @@ The initial starting point for this part is the blog post [Develop and Deploy Cu
 * [watsonx Developer Hub](https://github.com/IBM/watsonx-developer-hub)
 * [watsonx Developer Hub Discord](https://ibm.biz/wx-discord)
 * [Build and deploy agents on watsonx.ai from your IDE with new Agent templates](https://www.ibm.com/new/announcements/build-and-deploy-agents-to-watsonx-ai-from-your-ide)
+* [YouTube AI Agents: A Complete Guide to Developing and Deploying on watsonx.ai with IBM Cloud](https://youtu.be/u-rdaDSwL7A)
 
 
 
