@@ -28,3 +28,5 @@ workshops/regional_techXchange-march25/03_phase3_agents/agents/langgraph_impleme
 workshops/regional_techXchange-march25/03_phase3_agents/agents/langgraph_implementation/config.toml
 workshops/regional_techXchange-march25/03_phase3_agents/agents/langgraph_implementation/watsonx-ochestrate_integration
 workshops/regional_techXchange-march25/03_phase3_agents/agents/langgraph_implementation/.venv
+
+api_data.db
