@@ -41,6 +41,7 @@ pyenv global 3.11.9
 #### Step 2: Install the needed virtual environment
 
 ```sh
+cd agents/langgraph_implementation
 python3.11 -m venv .venv
 source ./.venv/bin/activate
 python3 -m pip install --upgrade pip
