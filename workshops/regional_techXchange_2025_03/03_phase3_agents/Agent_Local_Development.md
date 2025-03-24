@@ -107,6 +107,7 @@ export USER_AGENT="0001"
 ```sh
 cd agents/langgraph_implementation
 source ./.venv/bin/activate
+source ./src/langgraph_react_agent/.env
 poetry run pytest -rA tests/
 ```
 
