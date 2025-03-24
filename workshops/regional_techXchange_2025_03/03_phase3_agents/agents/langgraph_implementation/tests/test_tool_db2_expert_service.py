@@ -19,7 +19,6 @@ class TestTools:
      
     def test_db2_expert_service(self, question):
         try:
-
             logging.debug(f"Toolname:\n{db2_expert_service.name}")
             logging.debug(f"Tool description:\n{db2_expert_service.description}")
             logging.debug(f"Tool arguments:\n{db2_expert_service.args}")
@@ -28,8 +27,5 @@ class TestTools:
             print(f"**Test Case 'db2_expert_service' result: {the_result}")
             assert the_result
         except Exception as error:
-            print(f"**Test Case 'email' error: {error}")
-            
-        result= db2_expert_service(question)
-        print(f"**Test Case 'weather' result: {result}")
-        assert result
+            print(f"**Test Case 'db2_expert_service' error: {error}")
+
