@@ -192,7 +192,7 @@ export APP_PASSWORD=admin
 ### Step 2: Start the application
 
 ```sh
-cd agents/ui/code
+cd ui/code
 bash start_sdk.sh
 ```
 
