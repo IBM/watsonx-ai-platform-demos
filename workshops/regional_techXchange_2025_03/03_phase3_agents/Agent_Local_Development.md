@@ -91,6 +91,7 @@ export WATSONX_REGION=us-south
 export WATSONX_APIKEY=YOUR_KEY
 export WATSONX_DEPLOYMENT_ID=YOUR_ID
 export WATSONX_DEPLOYMENT_ID_RAG=YOUR_RAG_ID
+export WATSONX_DEPLOYMENT_ID_EMAIL=YOUR_EMAIL_ID
 export WATSONX_SPACE_ID=YOUR_SPACE_ID
 
 # Common
@@ -106,6 +107,7 @@ export USER_AGENT="0001"
 ```sh
 cd agents/langgraph_implementation
 source ./.venv/bin/activate
+source ./src/langgraph_react_agent/.env
 poetry run pytest -rA tests/
 ```
 
@@ -142,7 +144,7 @@ Successfully finished deployment creation, deployment_id='a76d3649-d836-4e85-862
 ```
 
 1. Insert the `deployment_id` value in the [`config.toml` file](./agents/langgraph_implementation/config.toml_template)
-2. Insert the `deployment_id` value in the [`.env` file](./ui/code/.env_template) for the Streamlit application. If your already have created the file.
+2. Insert the `deployment_id` value in the [`.env` file](./ui/code/.env_template) for the Streamlit application. If you already have created the file.
 
 
 ## 6. Integrate the deployed Agent to a local application
@@ -152,7 +154,7 @@ Successfully finished deployment creation, deployment_id='a76d3649-d836-4e85-862
 Example questions:
 
 1) What is a DB2 routine?
-2) Can you please create an answer to the question, 'What is a DB2 routine?' and then provide me with a mail I can send to the custom?
+2) Can you please create an answer to the question, 'What is a DB2 routine?' and then provide me with a mail I can send to the customer?
 
 ```sh
 cd agents/langgraph_implementation
@@ -188,10 +190,10 @@ export APP_USER=admin
 export APP_PASSWORD=admin
 ```
 
-### Step 2: Start the appplication
+### Step 2: Start the application
 
 ```sh
-cd agents/ui/code
+cd ui/code
 bash start_sdk.sh
 ```
 
@@ -199,7 +201,7 @@ bash start_sdk.sh
 2. Ask a question
  Possible question:
 
-    * "Can you please answer the question, 'What is a DB2 routine?' and then send me a mail I can send to a customer?"
+ * "Can you please answer the question, 'What is a DB2 routine?' and then send me a mail I can send to a customer?"
 
 
 ## Additional resources
