@@ -7,9 +7,10 @@
 1. Simplified Architecture for the Agent in watsonx and IBM Cloud
 2. Setup
 3. Test the given `tools` for the Agent
-4. Run the Agent locally
-5. Deploy the Agent
-6. integrate the deployed Agent into a local application
+4. Addional tests for the  given `tools`
+5. Run the Agent locally
+6. Deploy the Agent
+7. Integrate the deployed Agent into a local application
 
 ## 1. Simplified Architecture for the Agent in watsonx and IBM Cloud
 
@@ -111,7 +112,17 @@ source ./src/langgraph_react_agent/.env
 poetry run pytest -rA tests/
 ```
 
-## 4. Run the Agent locally
+## 4. Addional testx for the  given `tools`
+
+```sh
+cd agents/langgraph_implementation
+source ./.venv/bin/activate
+source ./src/langgraph_react_agent/.env
+poetry run python tests/debug_request_email_expert.py 
+poetry run python tests/debug_request_db2_expert.py 
+```
+
+## 5. Run the Agent locally
 
 ```sh
 cd agents/langgraph_implementation
@@ -125,7 +136,7 @@ Possible question:
 * "Can you please answer the question, 'What is a DB2 routine?' and then send me a mail I can send to a customer?"
 
 
-## 5. Deploy the Agent
+## 6. Deploy the Agent
 
 ```sh
 cd agents/langgraph_implementation
@@ -147,9 +158,9 @@ Successfully finished deployment creation, deployment_id='a76d3649-d836-4e85-862
 2. Insert the `deployment_id` value in the [`.env` file](./ui/code/.env_template) for the Streamlit application. If you already have created the file.
 
 
-## 6. Integrate the deployed Agent to a local application
+## 7. Integrate the deployed Agent to a local application
 
-### 6.1 CLI application
+### 7.1 CLI application
 
 Example questions:
 
@@ -162,7 +173,7 @@ source ./.venv/bin/activate
 poetry run python examples/query_existing_deployment.py
 ```
 
-### 6.2 Streamlit application
+### 7.2 Streamlit application
 
 
 #### Step 1: Generate an [`.env` file](./ui/code/.env_template) for the application
@@ -204,7 +215,7 @@ bash start_sdk.sh
  * "Can you please answer the question, 'What is a DB2 routine?' and then send me a mail I can send to a customer?"
 
 
-## Additional resources
+## 8. Additional resources
 
 * [watsonx Developer Hub](https://github.com/IBM/watsonx-developer-hub)
 * [LangGraph multi agent](https://langchain-ai.github.io/langgraph/how-tos/multi-agent-network/#using-with-a-prebuilt-react-agent)
