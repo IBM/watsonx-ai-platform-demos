@@ -158,6 +158,14 @@ Successfully finished deployment creation, deployment_id='a76d3649-d836-4e85-862
 1. Insert the `deployment_id` value in the [`config.toml` file](./agents/langgraph_implementation/config.toml_template)
 2. Insert the `deployment_id` value in the [`.env` file](./ui/code/.env_template) for the Streamlit application. If you already have created the file.
 
+## 6.1 Run the local CLI with the deployed Agent
+
+```sh
+cd agents/langgraph_implementation
+source ./.venv/bin/activate
+poetry run python examples/query_existing_deployment.py
+```
+
 
 ## 7. Integrate the deployed Agent to a local application
 

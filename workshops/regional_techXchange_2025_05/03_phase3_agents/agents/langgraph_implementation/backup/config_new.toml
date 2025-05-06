@@ -1,0 +1,13 @@
+
+[deployment]
+  watsonx_apikey = "zS3PmFIqmI5k_w9vgj5Oz8B_2sGoZP6h9P9_lm4Vwy52"
+  watsonx_url = "https://us-south.ml.cloud.ibm.com"  # should follow the format: `https://{REGION}.ml.cloud.ibm.com`
+  space_id = "da5db3d3-042b-4617-9672-0ee347a5c4fd"
+  deployment_id = "46a17853-a628-4aea-9a10-3d5fa07ab0e5" #local usage
+
+[deployment.custom]
+# during creation of deployment additional parameters can be provided inside `CUSTOM` object for further referencing
+# please refer to the API docs: https://cloud.ibm.com/apidocs/machine-learning-cp#deployments-create
+  model_id = "mistralai/mistral-large"  # underlying model of WatsonxChat
+  thread_id = "thread-1" # More info here: https://langchain-ai.github.io/langgraph/how-tos/persistence/
+  sw_runtime_spec = "runtime-24.1-py3.12"

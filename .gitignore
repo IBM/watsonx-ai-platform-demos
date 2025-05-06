@@ -67,3 +67,5 @@ workshops/regional_techXchange_2025_05/03_phase3_agents/regional_techXchange-mar
 api_data.db
 *.pdf
 workshops/regional_techXchange_2025_05/03_phase3_agents/agents/langgraph_implementation/.venv/bin/activate.csh
+workshops/regional_techXchange_2025_05/03_phase3_agents/agents/langgraph_implementation/config_new.toml
+workshops/regional_techXchange_2025_05/03_phase3_agents/agents/langgraph_implementation/config_old.toml
