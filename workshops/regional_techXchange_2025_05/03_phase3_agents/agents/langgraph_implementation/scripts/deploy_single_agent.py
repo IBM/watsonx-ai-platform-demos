@@ -125,7 +125,7 @@ CUSTOM_META = {
 
 meta_props = {
     client.deployments.ConfigurationMetaNames.NAME:
-        f"online ai_service test",
+        f"online ai_service zurich",
     client.deployments.ConfigurationMetaNames.ONLINE: {},
     client.deployments.ConfigurationMetaNames.CUSTOM: CUSTOM_META,
 }
