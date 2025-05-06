@@ -24,6 +24,7 @@ streamlit = "^1.42.0"
 watchdog = "^6.0.0"
 tqdm = "^4.67.1"
 markdownify = "^0.14.1"
+traceloop-sdk = "0.38.7"
 
 
 [build-system]

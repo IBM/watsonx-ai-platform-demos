@@ -10,6 +10,13 @@ import logging
 logging.basicConfig(level=logging.DEBUG)
 #logging.basicConfig(level=logging.INFO)
 
+# Instana
+from traceloop.sdk import Traceloop
+from traceloop.sdk.decorators import workflow
+from dotenv import load_dotenv
+
+
+#@workflow(name="Build_DACH_tools_rag_llm_observ")
 @tool(parse_docstring=True)
 def db2_expert_service(question: str) -> str:
     """
@@ -57,6 +64,8 @@ def db2_expert_service(question: str) -> str:
 
     ################################
     # Execution
+    #load_dotenv()
+    #Traceloop.init(app_name="Build_DACH_tools_llm_observ",disable_batch=True)
     payload_scoring = {
             "messages": [
                     {
@@ -79,6 +88,7 @@ def db2_expert_service(question: str) -> str:
 
     return result_text
 
+#@workflow(name="Build_DACH_tools_email_llm_observ")
 @tool(parse_docstring=True)
 def email_expert_service(question: str, answer: str) -> str:
     """
@@ -128,6 +138,8 @@ def email_expert_service(question: str, answer: str) -> str:
 
     ################################
     # Execution
+    #load_dotenv()
+    #Traceloop.init(app_name="Build_DACH_tools_llm_observ",disable_batch=True)
     payload_scoring = {
         "parameters": {
                 "prompt_variables": {
