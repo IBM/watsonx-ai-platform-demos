@@ -58,7 +58,7 @@ payload_scoring = {
 print(f"***Log payload:\n{payload_scoring}")
 
 response_scoring = requests.post(
-    f"https://{watsonx_conf()['WATSONX_REGION']}.ml.cloud.ibm.com/ml/v4/deployments/{watsonx_conf()['WATSONX_DEPLOYMENT_ID']}/ai_service?version=2021-05-01",
+    f"https://{watsonx_conf()['WATSONX_REGION']}.ml.cloud.ibm.com/ml/v4/deployments/{watsonx_conf()['WATSONX_DEPLOYMENT_ID_RAG']}/ai_service?version=2021-05-01",
     json=payload_scoring,
     headers={"Authorization": "Bearer " + get_bearer_token()}, 
 )
