@@ -22,8 +22,7 @@ class TestTools:
             logging.debug(f"Toolname:\n{db2_expert_service.name}")
             logging.debug(f"Tool description:\n{db2_expert_service.description}")
             logging.debug(f"Tool arguments:\n{db2_expert_service.args}")
-            dict = {"question": question}
-            the_result= db2_expert_service.invoke(dict)
+            the_result= db2_expert_service.invoke(question)
             print(f"**Test Case 'db2_expert_service' result: {the_result}")
             assert the_result
         except Exception as error:
