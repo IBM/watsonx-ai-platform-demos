@@ -14,14 +14,14 @@ import logging
 logging.basicConfig(level=logging.INFO)
 
 # Instana code
-#from traceloop.sdk import Traceloop
-#from traceloop.sdk.decorators import workflow
-#from dotenv import load_dotenv
-#load_dotenv()
-#Traceloop.init(app_name="Build_DACH_agent_llm_observ_thomass",disable_batch=True)
+from traceloop.sdk import Traceloop
+from traceloop.sdk.decorators import workflow
+from dotenv import load_dotenv
+load_dotenv()
+Traceloop.init(app_name="Build_DACH_agent_llm_observ_thomass",disable_batch=True)
 
 # Instana code
-#@workflow(name="Build_DACH_agent_llm_observ_thomass")
+@workflow(name="Build_DACH_agent_llm_observ_thomass")
 def get_graph_closure(client: APIClient, model_id: str) -> Callable:
     """Graph generator closure."""
 
