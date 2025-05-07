@@ -21,30 +21,6 @@
                         "content": {
                             "title": "The contents of the message.",
                             "type": "string"
-                        },
-                        "data": {
-                            "title": "Optional data.",
-                            "type": "object",
-                            "properties": {
-                                "exog": {
-                                    "title": "Explanatory variables (independent variables).",
-                                    "type": "array",
-                                    "items": {
-                                        "type": "number"
-                                    }
-                                },
-                                "endog": {
-                                    "title": "Dependent variable (response variable).",
-                                    "type": "array",
-                                    "items": {
-                                        "type": "number"
-                                    }
-                                }
-                            },
-                            "required": [
-                                "exog",
-                                "endog"
-                            ]
                         }
                     },
                     "required": [
