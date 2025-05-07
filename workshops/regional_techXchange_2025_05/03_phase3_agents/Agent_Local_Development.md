@@ -170,6 +170,16 @@ Possible question:
 
 ## 6. Deploy the Agent
 
+# Replace before deploy
+
+* Replace the path to the source directory to the custom `.env` file for your deployment. In the `workshops/regional_techXchange_2025_05/03_phase3_agents/agents/langgraph_implementation/scripts/build_package_single_agent.py` file.
+
+```python
+env_path = "YOUR_HOME/watsonx-ai-platform-demos/workshops/regional_techXchange_2025_05/03_phase3_agents/agents/langgraph_implementation/src/langgraph_react_agent"
+```
+
+* Execute following command
+
 ```sh
 cd agents/langgraph_implementation
 source ./.venv/bin/activate
