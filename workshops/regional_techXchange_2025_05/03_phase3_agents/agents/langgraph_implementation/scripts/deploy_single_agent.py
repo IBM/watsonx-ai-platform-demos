@@ -15,6 +15,7 @@ logger = logging.getLogger(__name__)
 config = load_config()
 dep_config = config["deployment"]
 online_parameters = dep_config["online"]["parameters"]
+ai_service_name = "online ai_service any parameter"
 
 client = ibm_watsonx_ai.APIClient(
     credentials=ibm_watsonx_ai.Credentials(url=dep_config["watsonx_url"], api_key=dep_config["watsonx_apikey"]),
@@ -85,7 +86,7 @@ with (root_dir / "schema" / "response.json").open("r", encoding="utf-8") as file
 
 meta_props = {
     client.repository.AIServiceMetaNames.SOFTWARE_SPEC_ID: asset_id,
-    client.repository.AIServiceMetaNames.NAME: "online ai_service",
+    client.repository.AIServiceMetaNames.NAME: ai_service_name,
     client.repository.AIServiceMetaNames.REQUEST_DOCUMENTATION: request_schema,
     client.repository.AIServiceMetaNames.RESPONSE_DOCUMENTATION: response_schema,
     client.repository.AIServiceMetaNames.TAGS: ["wx-agent"]
@@ -95,8 +96,7 @@ stored_ai_service_details = client.repository.store_ai_service(deployable_ai_ser
 ai_service_id = stored_ai_service_details["metadata"].get("id")
 
 meta_props = {
-    client.deployments.ConfigurationMetaNames.NAME:
-        f"online ai_service 'newer version'",
+    client.deployments.ConfigurationMetaNames.NAME:ai_service_name,
     client.deployments.ConfigurationMetaNames.ONLINE: {"parameters": online_parameters},
     client.repository.AIServiceMetaNames.TAGS: ["wx-agent"],
 }

@@ -1,13 +1,43 @@
+[cli.options]
+  # If true, cli `invoke` command is trying to use `ai_service.generate_stream` function for local tests, and `ai_service.generate` otherwise.
+  # Default: true
+  stream = true
+
+  # Path to json file with a complete payload that will be send to proper AI service generate function.
+  # Note that, the payload file will be only used when no `query` is provided when running `invoke ` command
+  # Default: None
+  payload_path = ""
 
 [deployment]
-  watsonx_apikey = "YOUR_CLOUD_API_KEY"
-  watsonx_url = "https://us-south.ml.cloud.ibm.com"  # should follow the format: `https://{REGION}.ml.cloud.ibm.com`
-  space_id = "YOUR_SPACE_ID"
-  deployment_id = "YOUR_DEPLOYMENT_ID" #local usage
+  # One of the below is required.
+  # To determine your `api_key`, refer to `IBM Cloud console API keys <https://cloud.ibm.com/iam/apikeys>`_.
+  watsonx_apikey = ""
+  watsonx_token = ""
 
-[deployment.custom]
-# during creation of deployment additional parameters can be provided inside `CUSTOM` object for further referencing
+  # should follow the format: `https://{REGION}.ml.cloud.ibm.com`
+  watsonx_url = ""
+
+  # Deployment space id is required to create deployment with AI service content.
+  space_id = "PLACEHOLDER_FOR_YOUR_SPACE_ID"
+
+  # variable, that is populated with last created deployment_id every time when command `watsonx-ai service new` finish successfully
+  deployment_id = ""
+
+[deployment.online.parameters]
+# during creation of deployment additional parameters can be provided inside `ONLINE` object for further referencing
 # please refer to the API docs: https://cloud.ibm.com/apidocs/machine-learning-cp#deployments-create
   model_id = "mistralai/mistral-large"  # underlying model of WatsonxChat
   thread_id = "thread-1" # More info here: https://langchain-ai.github.io/langgraph/how-tos/persistence/
-  sw_runtime_spec = "runtime-24.1-py3.12"
+  url = ""  # should follow the format: `https://{REGION}.ml.cloud.ibm.com`
+
+[deployment.software_specification]
+  # Name for derived software specification. If not provided, default one is used that will be build based on the package name: "{pkg_name}-sw-spec"
+  name = ""
+
+  # Whether to overwrite (delete existing and create new with the same name) watsonx derived software specification
+  # Default: false
+  overwrite = false
+
+  # The base software specification used to deploy the AI service. The template dependencies will be installed based on the packages included in the selected base software specification
+  # Default: "runtime-24.1-py3.11"
+  base_sw_spec = "runtime-24.1-py3.11"
