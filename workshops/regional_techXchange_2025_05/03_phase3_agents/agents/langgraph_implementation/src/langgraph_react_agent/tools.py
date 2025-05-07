@@ -92,7 +92,7 @@ def db2_expert_service(question: any) -> any:
 @tool("email_expert_service",parse_docstring=True)
 def email_expert_service(question: any, answer: any) -> any:
     """
-    The 'email_expert_service' tool generates a well-phrased and polite email response based on the provided issue resolution. The email should acknowledge the user's concern, explain the resolution clearly, and offer further assistance if needed. Keep the tone professional, friendly, and concise.
+    The 'email_expert_service' tool generates a well-phrased and polite email response based on the provided issue resolution to customers for support members. The email must acknowledge the user's concern, explain the resolution clearly based on the given answer, and offer further assistance if needed. Keep the tone professional, friendly, and concise.
 
     Args:
        question: The parameter question contains a technical question related to DB2 usage.
