@@ -48,7 +48,8 @@ source ./.venv/bin/activate
 python3 -m pip install --upgrade pip
 python3 -m pip install poetry
 poetry install
-poetry add --no-cache traceloop-sdk==0.38.7
+#Instana
+#poetry add --no-cache traceloop-sdk==0.38.7
 ```
 
 #### Step 3: Ensure the Python environment  is accessible 
@@ -198,14 +199,6 @@ Successfully finished deployment creation, deployment_id='a76d3649-d836-4e85-862
 
 1. Insert the `deployment_id` value in the [`config.toml` file](./agents/langgraph_implementation/config.toml_template)
 2. Insert the `deployment_id` value in the [`.env` file](./ui/code/.env_template) for the Streamlit application. If you already have created the file.
-
-## 6.1 Run the local CLI with the deployed Agent
-
-```sh
-cd agents/langgraph_implementation
-source ./.venv/bin/activate
-poetry run python examples/query_existing_deployment.py
-```
 
 
 ## 7. Integrate the deployed Agent to a local application

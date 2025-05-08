@@ -7,8 +7,8 @@ from dotenv import load_dotenv
 
 from langchain_core.tools import tool
 import logging
-logging.basicConfig(level=logging.DEBUG)
-#logging.basicConfig(level=logging.INFO)
+#logging.basicConfig(level=logging.DEBUG)
+logging.basicConfig(level=logging.INFO)
 
 # Instana
 #from traceloop.sdk import Traceloop
@@ -16,7 +16,7 @@ logging.basicConfig(level=logging.DEBUG)
 #from dotenv import load_dotenv
 
 
-#@workflow(name="Build_DACH_tools_rag_llm_observ")
+#@workflow("Build_DACH_tools_llm_observ_thomass",disable_batch=True)
 @tool("db2_expert_service",parse_docstring=True)
 def db2_expert_service(question: any) -> any:
     """
@@ -88,7 +88,7 @@ def db2_expert_service(question: any) -> any:
 
     return result_text
 
-#@workflow(name="Build_DACH_tools_email_llm_observ")
+#@workflow("Build_DACH_tools_llm_observ_thomass",disable_batch=True)
 @tool("email_expert_service",parse_docstring=True)
 def email_expert_service(question: any, answer: any) -> any:
     """
