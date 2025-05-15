@@ -54,12 +54,7 @@ workshops/regional_techXchange_2025_05/03_phase3_agents/agents/langgraph_impleme
 workshops/regional_techXchange_2025_05/03_phase3_agents/prompts/2025-02-28-01.md
 workshops/regional_techXchange_2025_05/03_phase3_agents/prompts/2025-03-03-01.md
 
-workshops/regional_techXchange_2025_05/03_phase3_agents/watsonx-ochestrate_integration/tsuedbro-agent-action-name-array-v2.json
-workshops/regional_techXchange_2025_05/03_phase3_agents/watsonx-ochestrate_integration/watsonx_openapi_v1.2.1.json
-workshops/regional_techXchange_2025_05/03_phase3_agents/watsonx-ochestrate_integration/watsonx_openapi_v1.2.2.json
-workshops/regional_techXchange_2025_05/03_phase3_agents/watsonx-ochestrate_integration/watsonx_openapi_v1.4.1.1.json
-workshops/regional_techXchange_2025_05/03_phase3_agents/watsonx-ochestrate_integration/watsonx_openapi_v1.4.1.json
-workshops/regional_techXchange_2025_05/03_phase3_agents/watsonx-ochestrate_integration/watsonx_openapi_v1.4.json
+workshops/regional_techXchange_2025_05/03_phase3_agents/watsonx-ochestrate_integration/openapi-specs/
 workshops/regional_techXchange_2025_05/03_phase3_agents/prompts/2025-02-28-02.md
 workshops/regional_techXchange_2025_05/03_phase3_agents/regional_techXchange-march25-agents.code-workspace
 
