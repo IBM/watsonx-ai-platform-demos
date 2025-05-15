@@ -1,5 +1,9 @@
 # Custom Agent definition in watsonx Orchestrate
 
+In our case `Custom Agent` the support agent in we will create in watsonx Orchestrate is called `orchestrator agent` by definition in watsonx Orchestrate. 
+
+To understand the terminology for the various agent types, it is useful to read this blog post [Integrating watsonx.ai Agents in watsonx Orchestrate](https://heidloff.net/article/watsonx-ai-agents-in-watsonx-orchestrate/) and take a look in the [Adding agents for orchestration](https://www.ibm.com/docs/en/watsonx/watson-orchestrate/current?topic=agents-adding-orchestration).
+
 * Overview multi agents
 
 ![](./../images/orchestate-multi.agents-01.png)
