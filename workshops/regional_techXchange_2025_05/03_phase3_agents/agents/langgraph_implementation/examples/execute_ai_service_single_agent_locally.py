@@ -5,6 +5,15 @@ from ai_service_single_agent import deployable_ai_service
 from utils import load_config
 from examples._interactive_chat import InteractiveChat
 
+# Instana code
+# Documentation: https://www.ibm.com/docs/en/instana-observability/1.0.294?topic=platforms-watsonx
+# See for the workflow usage in the agent implementation file: workshops/regional_techXchange_2025_05/03_phase3_agents/agents/langgraph_implementation/src/langgraph_react_agent/agent.py
+#from traceloop.sdk import Traceloop
+#from traceloop.sdk.decorators import workflow
+#from dotenv import load_dotenv
+#load_dotenv()
+#Traceloop.init(app_name="Build_DACH_agent_llm_observ_thomass", disable_batch=True)
+
 stream = True
 config = load_config()
 dep_config = config["deployment"]

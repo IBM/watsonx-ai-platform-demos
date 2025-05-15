@@ -13,14 +13,16 @@ import logging
 #logging.basicConfig(level=logging.DEBUG)
 logging.basicConfig(level=logging.INFO)
 
-# Instana code
+# Instana code 
+# This is no longer needed 
+# -> see this is the file 'workshops/regional_techXchange_2025_05/03_phase3_agents/agents/langgraph_implementation/examples/execute_ai_service_single_agent_locally.py'
 #from traceloop.sdk import Traceloop
 #from traceloop.sdk.decorators import workflow
 #from dotenv import load_dotenv
 #load_dotenv()
-#Traceloop.init(app_name="Build_DACH_agent_llm_observ_thomass",disable_batch=True)
+#Traceloop.init(app_name="Build_DACH_agent_llm_observ_thomass", disable_batch=True)
 
-# Instana code
+# Instana code (still needed)
 #@workflow(name="Build_DACH_agent_llm_observ_thomass")
 def get_graph_closure(client: APIClient, model_id: str) -> Callable:
     """Graph generator closure."""
