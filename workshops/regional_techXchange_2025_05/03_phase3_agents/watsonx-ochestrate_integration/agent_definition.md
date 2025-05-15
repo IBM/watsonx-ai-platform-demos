@@ -25,7 +25,7 @@ The support agent doesn't have any specific extra tools at the moment.
 ### 3.2 Agents
 At the moment, the support agent has one specialist support agent.
 
-### 3.2.1 Spealicst support agent: Support_agent_for_DB2_questions_and_email_outlines
+### 3.2.1 Specialist support agent: Support_agent_for_DB2_questions_and_email_outlines
 
 This agent is a support expert for level one to level two to answer questions and provide an initial email outline for support members to be more effective.
 
