@@ -15,7 +15,8 @@ logger = logging.getLogger(__name__)
 config = load_config()
 dep_config = config["deployment"]
 online_parameters = dep_config["online"]["parameters"]
-ai_service_name = "online ai_service zurich-example 2025-05-08"
+#ai_service_name = "online ai_service support specialist agent for DB2"
+ai_service_name = "online ai_service support specialist agent for DB2 wien 2025-05-21"
 
 client = ibm_watsonx_ai.APIClient(
     credentials=ibm_watsonx_ai.Credentials(url=dep_config["watsonx_url"], api_key=dep_config["watsonx_apikey"]),
