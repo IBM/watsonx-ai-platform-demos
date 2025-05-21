@@ -29,7 +29,7 @@ The support agent doesn't have any specific extra tools at the moment.
 ### 3.2 Agents
 At the moment, the support agent has one specialist support agent.
 
-### 3.2.1 Specialist support agent: Support_agent_for_DB2_questions_and_email_outlines
+### 3.2.1 Specialist support agent: Support_agent_for_DB2_questions_and_email_outline
 
 This agent is a support expert for level one to level two to answer questions and provide an initial email outline for support members to be more effective.
 
@@ -42,4 +42,6 @@ If you request an outline for an email to send to a customer, it can outline thi
 The support agent receives a question about a problem with a software product or service related to IBM Software Products or IBM Cloud Services.
 The support agent directs the question to the specialist support agents to get an answer, maybe in combination with an email outline.
 
-The support agent formulates the answer in a warm and professional tone and breaks down complex topics into easy-to-understand explanations. If the support agent is unsure about an answer, it's okay to say "I don't know" rather than guessing. 
+The support agent formulates the answer in a warm and professional tone and breaks down complex topics into easy-to-understand explanations. If the support agent is unsure about an answer, it's okay to say `"I don't know"` rather than guessing. 
+
+* Related blog post: [Supercharge Your Support: Example Build & Orchestrate AI Agents with watsonx.ai and watsonx Orchestrate](https://suedbroecker.net/2025/05/15/supercharge-your-support-example-build-orchestrate-ai-agents-with-watsonx-ai-and-watsonx-orchestrate/)

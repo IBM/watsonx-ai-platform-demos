@@ -183,6 +183,7 @@ env_path = "YOUR_HOME/watsonx-ai-platform-demos/workshops/regional_techXchange_2
 
 ```sh
 cd agents/langgraph_implementation
+source ./src/langgraph_react_agent/.env
 source ./.venv/bin/activate
 poetry run python scripts/deploy_single_agent.py
 ```
