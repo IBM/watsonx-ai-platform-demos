@@ -97,7 +97,6 @@ cat ./agents/langgraph_implementation/config.toml_template > ./agents/langgraph_
 # during creation of deployment additional parameters can be provided inside `ONLINE` object for further referencing
 # please refer to the API docs: https://cloud.ibm.com/apidocs/machine-learning-cp#deployments-create
   model_id = "mistralai/mistral-large"  # underlying model of WatsonxChat
-  thread_id = "thread-1" # More info here: https://langchain-ai.github.io/langgraph/how-tos/persistence/
   url = ""  # should follow the format: `https://{REGION}.ml.cloud.ibm.com`
 
 [deployment.software_specification]

@@ -12,11 +12,12 @@ from utils import load_config
 logging.basicConfig()
 logger = logging.getLogger(__name__)
 
+#ai_service_name = "online ai_service support specialist agent for DB2"
+ai_service_name = "online ai_service support specialist agent for DB2 - 2025-05-22 - str type"
+
 config = load_config()
 dep_config = config["deployment"]
 online_parameters = dep_config["online"]["parameters"]
-#ai_service_name = "online ai_service support specialist agent for DB2"
-ai_service_name = "online ai_service support specialist agent for DB2 wien 2025-05-21"
 
 client = ibm_watsonx_ai.APIClient(
     credentials=ibm_watsonx_ai.Credentials(url=dep_config["watsonx_url"], api_key=dep_config["watsonx_apikey"]),
@@ -97,7 +98,7 @@ stored_ai_service_details = client.repository.store_ai_service(deployable_ai_ser
 ai_service_id = stored_ai_service_details["metadata"].get("id")
 
 meta_props = {
-    client.deployments.ConfigurationMetaNames.NAME:ai_service_name,
+    client.deployments.ConfigurationMetaNames.NAME: ai_service_name,
     client.deployments.ConfigurationMetaNames.ONLINE: {"parameters": online_parameters},
     client.repository.AIServiceMetaNames.TAGS: ["wx-agent"],
 }

@@ -5,8 +5,6 @@ from ibm_watsonx_ai.foundation_models.schema import TextGenParameters
 from langchain_ibm import ChatWatsonx
 from langgraph.graph.graph import CompiledGraph
 from langgraph.prebuilt import create_react_agent
-from langgraph.checkpoint.memory import MemorySaver
-
 
 from langgraph_react_agent import TOOLS
 import logging
@@ -48,9 +46,6 @@ def get_graph_closure(client: APIClient, model_id: str) -> Callable:
     Execute a tool call whenever you see fit.
     """
 
-    # Initialise memory saver
-    memory = MemorySaver()
-
     def get_graph(system_prompt=default_system_prompt) -> CompiledGraph:
         """Get compiled graph with overwritten system prompt, if provided"""
 
@@ -58,7 +53,6 @@ def get_graph_closure(client: APIClient, model_id: str) -> Callable:
         return create_react_agent(
             chat, 
             tools=TOOLS, 
-            checkpointer=memory, 
             state_modifier=system_prompt
         )
 

@@ -18,7 +18,7 @@ logging.basicConfig(level=logging.INFO)
 
 #@workflow("Build_DACH_tools_llm_observ_thomass",disable_batch=True)
 @tool("db2_expert_service",parse_docstring=True)
-def db2_expert_service(question: any) -> any:
+def db2_expert_service(question: str) -> str:
     """
     The tool 'db2_expert_service' provides all information to answer DB2 seconded level support questions, based on a specific support database.
 
@@ -90,7 +90,7 @@ def db2_expert_service(question: any) -> any:
 
 #@workflow("Build_DACH_tools_llm_observ_thomass",disable_batch=True)
 @tool("email_expert_service",parse_docstring=True)
-def email_expert_service(question: any, answer: any) -> any:
+def email_expert_service(question: str, answer: str) -> str:
     """
     The 'email_expert_service' tool generates a well-phrased and polite email response based on the provided issue resolution to customers for support members. The email must acknowledge the user's concern, explain the resolution clearly based on the given answer, and offer further assistance if needed. Keep the tone professional, friendly, and concise.
 
