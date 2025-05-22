@@ -49,7 +49,7 @@ python3 -m pip install --upgrade pip
 python3 -m pip install poetry
 poetry install
 #Instana
-#poetry add --no-cache traceloop-sdk==0.38.7
+#poetry add --no-cache traceloop-sdk==0.40.7
 ```
 
 #### Step 3: Ensure the Python environment  is accessible 
@@ -176,6 +176,12 @@ Possible question:
 
 ```python
 env_path = "YOUR_HOME/watsonx-ai-platform-demos/workshops/regional_techXchange_2025_05/03_phase3_agents/agents/langgraph_implementation/src/langgraph_react_agent"
+```
+
+And the path for the destination of the code generation, based on the name in the [pyproject.toml](./03_phase3_agents/agents/langgraph_implementation/pyproject.toml) file.
+
+```python
+env_dest_name = "langgraph_react_agent_custom-0.1.4"
 ```
 
 * Execute following command

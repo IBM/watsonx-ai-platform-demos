@@ -9,6 +9,7 @@ logging.basicConfig(level=logging.DEBUG)
 #logging.basicConfig(level=logging.INFO)
 # Replace before deploy
 env_path = "/Users/thomassuedbroecker/Documents/tsuedbro/dev/watsonx-ai-platform-demos/workshops/regional_techXchange_2025_05/03_phase3_agents/agents/langgraph_implementation/src/langgraph_react_agent"
+env_dest_name = "langgraph_react_agent_custom-0.1.4"
 def get_package_name_and_version(pyproject_path: str) -> tuple[str, str]:
     """
     Parse pyproject.toml to get the package name and version.
@@ -64,7 +65,7 @@ def build_zip_sc(sc_dir: Path) -> None:
     logging.debug(f"***Log build: 3.1 Add '.env' file to zip folder.")    
     source_env_file=f"{env_path}/.env"
     logging.debug(f"***Log build: dest path {sc_dir.parent}") 
-    dest_env_file= f"{sc_dir.parent}/langgraph_react_agent-0.1.4/src/langgraph_react_agent/.env"
+    dest_env_file= f"{sc_dir.parent}/{env_dest_name}/src/langgraph_react_agent/.env"
     shutil.copyfile(source_env_file, dest_env_file)
     
     logging.debug(f"***Log build: 4. Create a ZIP archive of the source directory.")
