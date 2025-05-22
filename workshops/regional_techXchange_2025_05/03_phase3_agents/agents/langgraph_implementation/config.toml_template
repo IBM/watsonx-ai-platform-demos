@@ -23,11 +23,15 @@
   # variable, that is populated with last created deployment_id every time when command `watsonx-ai service new` finish successfully
   deployment_id = ""
 
+  # The following parameters, along with the ones defined above, are supported by IBM watsonx.ai Software.
+  watsonx_password = ""
+  watsonx_username = ""
+  watsonx_instance_id = ""
+
 [deployment.online.parameters]
 # during creation of deployment additional parameters can be provided inside `ONLINE` object for further referencing
 # please refer to the API docs: https://cloud.ibm.com/apidocs/machine-learning-cp#deployments-create
   model_id = "mistralai/mistral-large"  # underlying model of WatsonxChat
-  thread_id = "thread-1" # More info here: https://langchain-ai.github.io/langgraph/how-tos/persistence/
   url = ""  # should follow the format: `https://{REGION}.ml.cloud.ibm.com`
 
 [deployment.software_specification]
