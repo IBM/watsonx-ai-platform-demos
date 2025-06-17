@@ -12,6 +12,10 @@ To understand the terminology for the various agent types, it is useful to read 
 
 ![](./../images/orchestate-multi.agents-02.png)
 
+## 0. Name
+
+We just call the support agent.
+
 ## 1. Profile
 
 This agent is a support agent for various topics related to IBM Software products or IBM Cloud services.
