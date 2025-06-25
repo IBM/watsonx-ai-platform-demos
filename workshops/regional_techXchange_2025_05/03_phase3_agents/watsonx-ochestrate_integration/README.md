@@ -4,6 +4,8 @@ In our case `Custom Agent` the support agent we will create in watsonx Orchestra
 
 To understand the terminology for the various agent types, it is useful to read this blog post [Integrating watsonx.ai Agents in watsonx Orchestrate](https://heidloff.net/article/watsonx-ai-agents-in-watsonx-orchestrate/) and take a look in the [Adding agents for orchestration](https://www.ibm.com/docs/en/watsonx/watson-orchestrate/current?topic=agents-adding-orchestration). In this context the IBM Think article [`What is AI agent orchestration?`](https://www.ibm.com/think/topics/ai-agent-orchestration) is also useful.
 
+For the details of the setup [Getting Started with Local AI Agents in the watsonx Orchestrate Developer Edition](https://suedbroecker.net/2025/06/25/getting-started-with-local-ai-agents-in-the-watsonx-orchestrate-developer-edition/) is useful.
+
 * Overview multi agents
 
 ![](./../images/orchestate-multi.agents-01.png)
