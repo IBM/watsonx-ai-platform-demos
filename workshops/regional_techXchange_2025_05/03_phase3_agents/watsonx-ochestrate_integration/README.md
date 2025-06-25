@@ -12,6 +12,10 @@ To understand the terminology for the various agent types, it is useful to read 
 
 ![](./../images/orchestate-multi.agents-02.png)
 
+* Local machine integration
+
+![](./../images/orchestate-multi.agents-03.gif)
+
 ## 0. Name
 
 We just call the agent: `Support Agent`
