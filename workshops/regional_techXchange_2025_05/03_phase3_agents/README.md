@@ -7,6 +7,7 @@
 1. Create an Agent with the [`Agent Lab` in the `watsonx UI`](./Agent-Lab-Create.md) 
 2. Create a deployment from the created Agent in the [`watsonx UI`](./Agent-Lab-Deployment.md)
 3. Develop an Agent locally [`setup, implementation, deployment, and execution`](./Agent_Local_Development.md)
+3. Optional: watsonx Orchestrate integration [`setup, implementation, deployment, and execution`](./watsonx-ochestrate_integration/README.md)
 
 ## 2. Additional resources
 
