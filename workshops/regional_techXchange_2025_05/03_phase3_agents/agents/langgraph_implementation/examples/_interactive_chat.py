@@ -22,7 +22,7 @@ class InteractiveChat:
 
         self.questions = ("Hi! How are you?",
                           "Can you please provide an answer to the question: 'What is a DB2 routine?' and then provide me a mail I can send to a customer?",
-                          "What is a DB2 routine?") if questions is None else questions
+                          "Can you answer the question: What is a DB2 routine and write a email for me?") if questions is None else questions
 
         self._help_message = textwrap.dedent(
             """
