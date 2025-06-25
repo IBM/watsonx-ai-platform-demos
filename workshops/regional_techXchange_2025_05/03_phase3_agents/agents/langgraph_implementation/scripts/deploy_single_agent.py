@@ -13,7 +13,7 @@ logging.basicConfig()
 logger = logging.getLogger(__name__)
 
 #ai_service_name = "online ai_service support specialist agent for DB2"
-ai_service_name = "online ai_service support specialist agent for DB2 - 2025-05-22 - str type"
+ai_service_name = "online ai_service support specialist agent for DB2 - 2025-06-25 - hamburg"
 
 config = load_config()
 dep_config = config["deployment"]
