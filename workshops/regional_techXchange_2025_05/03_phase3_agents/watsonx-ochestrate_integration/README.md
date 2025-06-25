@@ -41,7 +41,11 @@ The support agent doesn't have any specific extra tools at the moment.
 ### 3.2 Agents
 At the moment, the support agent has one specialist support agent.
 
-### 3.2.1 Specialist support agent: Support_agent_for_DB2_questions_and_email_outline
+### 3.2.1 Specialist support agent 
+
+* Name: Support_agent_for_DB2_questions_and_email_outline
+
+* Description:
 
 Insert following text:
 
