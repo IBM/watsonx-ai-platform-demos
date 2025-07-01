@@ -1,0 +1,65 @@
+[
+  {
+    "question": "What are the primary performance metrics used to measure a computer system's behavior as described in the document?",
+    "correct_answer": "System response time, throughput, and resource utilization.",
+    "correct_answer_document_ids": [
+      "perfbook.pdf"
+    ]
+  },
+  {
+    "question": "According to the performance tuning guidelines, why should you change only one parameter at a time?",
+    "correct_answer": "Changing one parameter at a time allows you to accurately assess the impact of each change on overall performance.",
+    "correct_answer_document_ids": [
+      "perfbook.pdf"
+    ]
+  },
+  {
+    "question": "What is the purpose of benchmark testing in the context of performance tuning?",
+    "correct_answer": "Benchmark testing is used to simulate real-world workloads, measure current system performance, and help tune configuration parameters by running controlled, repeatable tests.",
+    "correct_answer_document_ids": [
+      "perfbook.pdf"
+    ]
+  },
+  {
+    "question": "What is the main function of self-tuning memory in a Db2 system?",
+    "correct_answer": "It automatically sets memory configuration parameter values and dynamically distributes available memory among buffer pools, locking memory, package cache, and sort memory.",
+    "correct_answer_document_ids": [
+      "perfbook.pdf"
+    ]
+  },
+  {
+    "question": "How do you enable self-tuning memory for the database?",
+    "correct_answer": "By setting the self_tuning_mem database configuration parameter to ON and configuring related memory parameters (like buffer pool size, locklist, etc.) to AUTOMATIC.",
+    "correct_answer_document_ids": [
+      "perfbook.pdf"
+    ]
+  },
+  {
+    "question": "What limitation of self-tuning memory is mentioned in the document?",
+    "correct_answer": "Its performance benefits can be limited when little memory is available or when the workload's memory requirements change rapidly, preventing absolute convergence.",
+    "correct_answer_document_ids": [
+      "perfbook.pdf"
+    ]
+  },
+  {
+    "question": "Which privilege is automatically granted to the creator of a table in Db2?",
+    "correct_answer": "CONTROL privilege.",
+    "correct_answer_document_ids": [
+      "secbook.pdf"
+    ]
+  },
+  {
+    "question": "What privilege allows a user to delete rows from a table or view?",
+    "correct_answer": "DELETE privilege.",
+    "correct_answer_document_ids": [
+      "secbook.pdf"
+    ]
+  },
+  {
+    "question": "What is the impact of granting CONTROL privilege on a table in terms of other privileges?",
+    "correct_answer": "Granting CONTROL privilege automatically grants all other privileges on that table with the GRANT OPTION.",
+    "correct_answer_document_ids": [
+      "secbook.pdf"
+    ]
+  }
+]

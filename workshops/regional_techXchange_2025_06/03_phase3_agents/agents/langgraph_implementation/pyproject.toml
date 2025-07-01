@@ -1,0 +1,33 @@
+[tool.poetry]
+name = "langgraph_react_agent_custom"
+version = "0.1.4"
+description = "A template for a LangGraph LLM app deployable on IBM Cloud as an ai_service. This particular example focues on a WatsonX chatbot enhanced with external tools (function calling)."
+authors = ["Your Name <you@example.com>"]
+license = "MIT"
+readme = "README.md"
+packages = [
+    { include = "langgraph_react_agent", from = "src" }
+]
+
+[tool.poetry.dependencies]
+python = ">=3.10,<3.13"
+langchain-ibm = "^0.3.7"
+python-dotenv = "^1.0.1"
+ibm-watsonx-ai = { version = ">=1.3.5", python = ">=3.11,<3.13" }
+langgraph = ">0.2,<0.3"
+pytest = "^8.3.3"
+statsmodels = "^0.14.4"
+numpy = "<2"
+langchain-community = "^0.3.17"
+duckduckgo-search = "^7.3.2"
+streamlit = "^1.42.0"
+watchdog = "^6.0.0"
+tqdm = "^4.67.1"
+markdownify = "^0.14.1"
+traceloop-sdk = "0.40.7"
+autogen_watsonx_client = "^0.0.8"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
