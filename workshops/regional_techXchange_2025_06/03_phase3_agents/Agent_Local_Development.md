@@ -144,7 +144,9 @@ source ./src/langgraph_react_agent/.env
 poetry run pytest -rA tests/
 ```
 
-## 4. Addional testx for the  given `tools`
+## 4. Addional tests for the  given `tools`
+
+In these tests, we invoke the deployed endpoints for the `email` and `RAG` prompts in `watsonx.ai` we use inside the tools.  
 
 ```sh
 cd agents/langgraph_implementation
@@ -155,6 +157,8 @@ poetry run python tests/debug_request_db2_expert.py
 ```
 
 ## 5. Run the Agent locally
+
+Here, we run the agent locally, but we will utilize the models in watsonx.ai and the deployed endpoints for the prompts used within the tools.
 
 ```sh
 cd agents/langgraph_implementation
@@ -170,7 +174,9 @@ Possible question:
 
 ## 6. Deploy the Agent
 
-# Replace before deploy
+Now we deploy the agent into a deployment space.
+
+### 6.1 Verify and replace correct the paths before the deployment
 
 * Replace the path to the source directory to the custom `.env` file for your deployment. In the `workshops/regional_techXchange_2025_05/03_phase3_agents/agents/langgraph_implementation/scripts/build_package_single_agent.py` file.
 
@@ -208,6 +214,11 @@ Successfully finished deployment creation, deployment_id='a76d3649-d836-4e85-862
 
 
 ## 7. Integrate the deployed Agent to a local application
+
+Now, we can integrate the deployed Agent to applications. These are two example applications:
+
+* CLI application
+* Streamlit application
 
 ### 7.1 CLI application
 
