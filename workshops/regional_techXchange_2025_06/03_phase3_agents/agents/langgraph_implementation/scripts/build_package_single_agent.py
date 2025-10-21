@@ -8,7 +8,7 @@ import logging
 logging.basicConfig(level=logging.DEBUG)
 #logging.basicConfig(level=logging.INFO)
 # Replace before deploy
-env_path = "/Users/thomassuedbroecker/Documents/tsuedbro/dev/watsonx-ai-platform-demos/workshops/regional_techXchange_2025_05/03_phase3_agents/agents/langgraph_implementation/src/langgraph_react_agent"
+env_path = "/Users/thomassuedbroecker/Documents/tsuedbro/dev/watsonx-ai-platform-demos/workshops/regional_techXchange_2025_06/03_phase3_agents/agents/langgraph_implementation/src/langgraph_react_agent"
 env_dest_name = "langgraph_react_agent_custom-0.1.4"
 def get_package_name_and_version(pyproject_path: str) -> tuple[str, str]:
     """
