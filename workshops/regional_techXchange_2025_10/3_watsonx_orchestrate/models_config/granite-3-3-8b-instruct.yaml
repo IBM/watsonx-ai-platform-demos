@@ -1,0 +1,12 @@
+spec_version: v1
+kind: model
+name: watsonx/ibm/granite-3.3-8b-instruct
+display_name: IBM watsonx.ai (Granite)
+description: |
+  IBM watsonx.ai model using Space-scoped configuration.
+tags:
+  - ibm
+  - watsonx
+model_type: chat
+provider_config:
+  watsonx_space_id: 95c665ab-d2b9-491f-a7f2-b1e39c7fb118

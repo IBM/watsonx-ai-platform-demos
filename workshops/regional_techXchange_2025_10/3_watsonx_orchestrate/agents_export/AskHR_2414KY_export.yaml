@@ -1,0 +1,72 @@
+kind: native
+name: AskHR_2414KY
+display_name: AskHR(SAP)
+description: This is a helpful HR agent for performing employee management tasks in
+  SAP SuccessFactors.
+context_access_enabled: true
+context_variables: []
+llm: watsonx/meta-llama/llama-3-2-90b-vision-instruct
+style: default
+instructions: |-
+  You are a manager agent. You have other agents working under you.
+  The compensation agent can handle retrieving data about the employee's pay and benefits.
+  The organization agent can help the user retrieve their direct reports.
+  Your job is to delegate tasks to the most appropriate agent.
+guidelines: []
+collaborators:
+- sap_org_structure_agent_1c6c4123
+- sap_compensation_agent_8d6d4704
+tools: []
+knowledge_base:
+- knowledge_for_agent_AskHR_2414KY
+chat_with_docs:
+  enabled: false
+  vector_index:
+    chunk_size: 400
+    chunk_overlap: 50
+    limit: 10
+  generation:
+    prompt_instruction: ''
+    max_docs_passed_to_llm: 5
+    generated_response_length: Moderate
+    display_text_no_results_found: I searched my knowledge base, but did not find
+      anything related to your query
+    display_text_connectivity_issue: I might have information related to your query
+      to share, but am unable to connect to my knowledge base at the moment
+    idk_message: I'm afraid I don't understand. Please rephrase your question.
+    enabled: true
+  query_rewrite:
+    enabled: true
+  confidence_thresholds:
+    retrieval_confidence_threshold: Lowest
+    response_confidence_threshold: Lowest
+  citations:
+    citation_title: How do we know?
+    citations_shown: -1
+  hap_filtering:
+    output:
+      enabled: false
+      threshold: 0.5
+starter_prompts:
+  is_default_prompts: false
+  prompts:
+  - id: default0
+    title: What are the central plan options?
+    subtitle: ''
+    prompt: What are the central plan options?
+    state: active
+  - id: default1
+    title: Please show me the payslips for jadannb@test.com for January 2018!
+    subtitle: ''
+    prompt: Please show me the payslips for jadannb@test.com for January 2018!
+    state: active
+  - id: default2
+    title: Who are the direct reports for Theresa.Chin@bestrunsap.com?
+    subtitle: ''
+    prompt: Who are the direct reports for Theresa.Chin@bestrunsap.com?
+    state: active
+welcome_content:
+  welcome_message: Hello, I am your AskHR Agent to perform tasks in SAP SuccessFactors!
+  description: Accuracy of generated answers may vary. Please double-check responses.
+  is_default_message: false
+spec_version: v1
