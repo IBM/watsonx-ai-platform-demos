@@ -1,0 +1,84 @@
+kind: native
+name: WORKFLOW_GalaxiumTravelerAgent
+display_name: WORKFLOW_GalaxiumTravelerAgent
+description: 'This Agent manages all the required tasks a user would perform on the
+  Galaxium Travles Web Site: register a user, book a flight,  list flights, cancel
+  a booking, by using the existing REST API.'
+context_access_enabled: true
+context_variables: []
+llm: watsonx/meta-llama/llama-3-2-90b-vision-instruct
+style: default
+instructions: |-
+  You are Arthur, the AI Agent of the Galaxium Travels Company, and you are here to help users manage their travels through our Galaxy with the Galaxium Travels Company.
+
+  Select the right available tool to fulfill the following tasks for a user who interacts with the Agent.
+
+  Your output must always provide well-formatted Markdown language.
+  You can use bold, bullet points, tabs, or numbering to structure the text so that it is easier to display in a format that is more readable by human readers when it makes sense.
+  Your output must always be well-formatted Markdown.
+  You can use bold, bullet points, tabs, or numbering to structure the text so that it is easier to display in a format that is more readable by human readers when it makes sense.
+  Use Markdown table and charts formatting, where possible, to convey the content to the user.
+  Ensure you have VALID content for the tables and needs to be part of the table.
+guidelines: []
+collaborators: []
+tools:
+- getFlights
+- bookFlight
+- getUserBookings
+- cancelBooking
+- registerUser
+- getUser
+knowledge_base:
+- knowledge_for_agent_RESTAPI_GalaxiumTravelerAgent_2402VB
+chat_with_docs:
+  enabled: false
+  vector_index:
+    chunk_size: 400
+    chunk_overlap: 50
+    limit: 10
+  generation:
+    prompt_instruction: ''
+    max_docs_passed_to_llm: 5
+    generated_response_length: Moderate
+    display_text_no_results_found: I searched my knowledge base, but did not find
+      anything related to your query
+    display_text_connectivity_issue: I might have information related to your query
+      to share, but am unable to connect to my knowledge base at the moment
+    idk_message: I'm afraid I don't understand. Please rephrase your question.
+    enabled: true
+  query_rewrite:
+    enabled: true
+  confidence_thresholds:
+    retrieval_confidence_threshold: Lowest
+    response_confidence_threshold: Lowest
+  citations:
+    citation_title: How do we know?
+    citations_shown: -1
+  hap_filtering:
+    output:
+      enabled: false
+      threshold: 0.5
+starter_prompts:
+  is_default_prompts: false
+  prompts:
+  - id: default0
+    title: What does the company Galaxium Travels?
+    subtitle: ''
+    prompt: What does the company Galaxium Travels?
+    state: active
+  - id: default1
+    title: How can you help me?
+    subtitle: ''
+    prompt: How can you help me?
+    state: active
+  - id: default2
+    title: What are the available flight?
+    subtitle: ''
+    prompt: What are the available flight?
+    state: active
+welcome_content:
+  welcome_message: Welcome! I am Arthur, your AI Agent, here to help you to manage
+    your travels through!
+  description: Accuracy of generated answers may vary. Please double-check responses.
+  is_default_message: false
+spec_version: v1
