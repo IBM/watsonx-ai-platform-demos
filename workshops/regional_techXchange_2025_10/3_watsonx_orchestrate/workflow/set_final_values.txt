@@ -1,0 +1,10 @@
+self.output.email = flow.input.email
+self.output.name = flow.input.name
+# Verify if the user want to register the user!
+if flow["Register a new user activity!"]["Do you want to register this user?"].output.value == True:
+    self.output.user_is_registered = True
+    self.output.user_id = flow["Register a new user activity!"]["Register a new user"].output.user_id
+else:
+    self.output.user_is_registered = False
+    self.output.user_id = 0
+
