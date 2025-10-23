@@ -1,0 +1,29 @@
+# Core LangChain components
+langchain-core>=0.3.76
+langchain-openai>=0.3.33
+langchain-graph-retriever>=0.8.0
+langchain-astradb>=0.6.1
+
+# Data processing
+pandas>=2.3.2
+python-dotenv>=1.1.1
+
+# AI/ML
+openai>=1.109.1
+tiktoken>=0.11.0
+
+# Text processing
+markdown>=3.7.0
+beautifulsoup4>=4.12.0
+
+# Scientific computing
+numpy>=1.24.0
+
+# Jupyter notebook
+jupyter>=1.0.0
+ipykernel>=6.0.0
+
+# Visualization libraries
+networkx>=3.0
+matplotlib>=3.5.0
+plotly>=5.15.0
