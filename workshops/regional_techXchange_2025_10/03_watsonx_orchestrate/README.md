@@ -52,4 +52,7 @@ Related **Blog posts**
 * [IBM Documentation](https://developer.watson-orchestrate.ibm.com)
 * [Blog post: Cheat Sheet & Mini-Tutorial: watsonx Orchestrate CLI (for local dev & remote config)](https://suedbroecker.net/2025/10/09/cheat-sheet-mini-tutorial-watsonx-orchestrate-cli-for-local-dev-remote-config/)
 * Agents exports
-  The folder `workshops/regional_techXchange_2025_10/03_watsonx_orchestrate/agents_export` contains  agent exports.
+  The folder `workshops/regional_techXchange_2025_10/03_watsonx_orchestrate/agents_export` contains  agent exports. 
+  The [Link to the related example CLI commands.](./export-import.md)
+
+
