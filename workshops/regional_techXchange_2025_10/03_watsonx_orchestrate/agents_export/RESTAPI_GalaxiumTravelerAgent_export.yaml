@@ -1,8 +1,8 @@
 kind: native
-name: RESTAPI_GalaxiumTravelerAgent_2402VB
+name: RESTAPI_GalaxiumTravelerAgent
 display_name: RESTAPI_GalaxiumTravelerAgent
 description: 'This Agent manages all the required tasks a user would perform on the
-  Galaxium Travles Web Site: register a user, book a flight,  list flights, cancel
+  Galaxium Travels Web Site: register a user, book a flight,  list flights, cancel
   a booking, by using the existing REST API.'
 context_access_enabled: true
 context_variables: []
