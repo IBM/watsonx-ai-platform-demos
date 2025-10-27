@@ -2,7 +2,7 @@ kind: native
 name: WORKFLOW_GalaxiumTravelerAgent
 display_name: WORKFLOW_GalaxiumTravelerAgent
 description: 'This Agent manages all the required tasks a user would perform on the
-  Galaxium Travles Web Site: register a user, book a flight,  list flights, cancel
+  Galaxium Travels Web Site: register a user, book a flight,  list flights, cancel
   a booking, by using the existing REST API.'
 context_access_enabled: true
 context_variables: []
@@ -26,8 +26,8 @@ tools:
 - bookFlight
 - getUserBookings
 - cancelBooking
-- registerUser
 - getUser
+- Register_a_new_user_workflow_861296
 knowledge_base:
 - knowledge_for_agent_RESTAPI_GalaxiumTravelerAgent_2402VB
 chat_with_docs:
@@ -61,6 +61,11 @@ chat_with_docs:
 starter_prompts:
   is_default_prompts: false
   prompts:
+  - id: ba010338-ecb2-411b-b7d3-947b0e4978e7
+    title: Register a new user!
+    subtitle: ''
+    prompt: Register a new user!
+    state: active
   - id: default0
     title: What does the company Galaxium Travels?
     subtitle: ''
