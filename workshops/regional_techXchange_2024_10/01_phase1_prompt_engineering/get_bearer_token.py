@@ -1,6 +1,6 @@
 import requests
 
-api_key="***REMOVED***"
+api_key="0-yL63WB4sv1_lB-rx3vdvXfnYh5MrDT7vXTOqqxkBX4"
 
 # Function to get the bearer token
 def get_bearer_token(api_key):
