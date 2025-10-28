@@ -30,8 +30,11 @@ In this section, we will cover the topics:
 * IBM Developer watsonx Orchestrate: 
     * [Generating embedded web chat](https://developer.watson-orchestrate.ibm.com/agents/integrate_agents#generating-embedded-web-chat)
 
+### 3. Add an Agent Chat to the Web UI
 
-### 3. The Galaxium Travels Examples
+[Build workflow](./workflow.md)
+
+### 4. The Galaxium Travels Examples
 
 * [Galaxium Travels Infrastructure](https://github.com/thomassuedbroecker/galaxium-travels-infrastructure)
 * [Galaxium Travels Idea](https://github.com/Max-Jesch/galaxium-travels)
