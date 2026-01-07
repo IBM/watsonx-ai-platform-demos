@@ -1,6 +1,8 @@
 import requests
+import os
 
-api_key="0-yL63WB4sv1_lB-rx3vdvXfnYh5MrDT7vXTOqqxkBX4"
+# Get API key from environment variable
+api_key = os.environ.get("IBM_CLOUD_API_KEY", "YOUR_API_KEY_HERE")
 
 # Function to get the bearer token
 def get_bearer_token(api_key):

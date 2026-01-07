@@ -1,8 +1,10 @@
 import requests
+import os
 
 # This code can be used to debug the request to the watsonx.ai deployed grounded chat model
 
-api_key = "0-yL63WB4sv1_lB-rx3vdvXfnYh5MrDT7vXTOqqxkBX4"  # SENSITIVE!! DO NOT SHARE OR UPLOAD TO GITHUB
+# Get API key from environment variable
+api_key = os.environ.get("IBM_CLOUD_API_KEY", "YOUR_API_KEY_HERE")
 
 
 # Function to get the bearer token
